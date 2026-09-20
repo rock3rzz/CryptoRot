@@ -1,5 +1,4 @@
-# CryptoRot, Phase 2 scanner
-
+# CryptoRot
 Four modules: rules.py (severity table), ast_scanner.py (AST walker),
 scorer.py (debt formula), cli.py (orchestration).
 
