@@ -377,15 +377,24 @@ function howLines(code,hot){
   return code.split('\n').map((l,i)=>`<div class="cl2${hot.includes(i+1)?' hot':''}"><span class="m">${i+1}</span><code>${esc(l)||' '}</code></div>`).join('');
 }
 function timeline(){
-  const Y0=CUR, Y1=2036, W=880, L=250, R=W-14, x=y=>L+(y-Y0)/(Y1-Y0)*(R-L), rows=[
+  const Y0=CUR, Y1=2036, rows=[
     ['MD5','now'],['ECB mode','now'],['Hardcoded key','now'],['Key below 112 bits','now'],['SHA-1','p',2030],['RSA, ECDH, Diffie-Hellman','p',2030],['ECDSA and other signatures','p',2031]];
-  const rh=34, top=44, H=top+rows.length*rh+14; let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="When each kind of finding falls due">`;
-  [[2030,'2030'],[2031,'2031'],[2035,'2035']].forEach(([y,t],i)=>{ const xx=x(y); s+=`<line x1="${xx}" x2="${xx}" y1="${top-8}" y2="${H-8}" stroke="var(--line)"/><text x="${xx}" y="30" text-anchor="middle" class="tl-t">${t}</text>`; });
-  s+=`<text x="${L}" y="30" text-anchor="start" class="tl-t">${Y0}</text>`;
-  rows.forEach((r,i)=>{ const y=top+i*rh; s+=`<text x="0" y="${y+17}" class="tl-l">${r[0]}</text>`;
-    if(r[1]==='now') s+=`<rect x="${L}" y="${y+4}" width="${R-L}" height="18" fill="${COL.due}"/>`;
-    else { const d=x(r[2]); s+=`<rect x="${L}" y="${y+4}" width="${d-L}" height="18" fill="${COL.pend}"/><rect x="${d}" y="${y+4}" width="${R-d}" height="18" fill="${COL.due}"/>`; } });
-  return s+'</svg>';
+  const bar=(x,L,R,y,r)=>{ if(r[1]==='now') return `<rect x="${L}" y="${y}" width="${R-L}" height="18" fill="${COL.due}"/>`; const d=x(r[2]); return `<rect x="${L}" y="${y}" width="${d-L}" height="18" fill="${COL.pend}"/><rect x="${d}" y="${y}" width="${R-d}" height="18" fill="${COL.due}"/>`; };
+  // wide: labels left of the bars
+  const W=880, L=250, R=W-14, x=y=>L+(y-Y0)/(Y1-Y0)*(R-L), rh=34, top=44, H=top+rows.length*rh+14;
+  let w=`<svg class="dt-w" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="When each kind of finding falls due">`;
+  [[2030,'2030'],[2031,'2031'],[2035,'2035']].forEach(([y,t])=>{ const xx=x(y); w+=`<line x1="${xx}" x2="${xx}" y1="${top-8}" y2="${H-8}" stroke="var(--line)"/><text x="${xx}" y="30" text-anchor="middle" class="tl-t">${t}</text>`; });
+  w+=`<text x="${L}" y="30" text-anchor="start" class="tl-t">${Y0}</text>`;
+  rows.forEach((r,i)=>{ const y=top+i*rh; w+=`<text x="0" y="${y+17}" class="tl-l">${r[0]}</text>`+bar(x,L,R,y+4,r); });
+  w+='</svg>';
+  // narrow: label above each bar, full width, larger type
+  const W2=420, L2=4, R2=W2-4, x2=y=>L2+(y-Y0)/(Y1-Y0)*(R2-L2), rh2=54, top2=52, H2=top2+rows.length*rh2;
+  let n=`<svg class="dt-n" viewBox="0 0 ${W2} ${H2}" width="100%" role="img" aria-label="When each kind of finding falls due">`;
+  [[2030,'2030',34],[2031,'2031',14],[2035,'2035',34]].forEach(([y,t,ty])=>{ const xx=x2(y); n+=`<line x1="${xx}" x2="${xx}" y1="${ty+6}" y2="${H2}" stroke="var(--line)"/><text x="${xx}" y="${ty}" text-anchor="middle" class="tl-t2">${t}</text>`; });
+  n+=`<text x="${L2}" y="34" class="tl-t2">${Y0}</text>`;
+  rows.forEach((r,i)=>{ const y=top2+i*rh2; n+=`<text x="${L2}" y="${y+14}" class="tl-l2">${r[0]}</text>`+bar(x2,L2,R2,y+22,r); });
+  n+='</svg>';
+  return w+n;
 }
 function how(){
   const E=HOW, f=E.finding, step=S.hstep==null?0:S.hstep, tr=f.trail.filter(t=>t.kind!=='verdict');
