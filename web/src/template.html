@@ -572,6 +572,25 @@ html,body{max-width:100%;overflow-x:hidden}
   .band{margin-top:64px;padding:52px 0 28px}.band .in{flex-direction:column;align-items:stretch;gap:30px}
   .band h2{font-size:34px}.band .bf{margin-top:40px}
 }
+
+.ft{background:var(--ink);color:var(--bone);margin-top:96px;padding:0 0 40px;overflow:hidden}
+.on-scan .ft{margin-top:0}
+.band{padding-bottom:64px}
+.ps{display:flex;gap:6px;height:14px;margin-bottom:56px;overflow:hidden;border-top:1px solid #2a2d33;padding-top:0}
+.ps i{flex:none;width:14px;height:14px;background:var(--verd);animation:px 3.4s ease-in-out infinite alternate;animation-delay:calc(var(--i)*70ms)}
+@keyframes px{0%{background:#2b806b;transform:scale(1)}45%{background:#b8841f;transform:scale(.8)}100%{background:#ce461a;transform:scale(.55)}}
+.ft-g{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.ft-w{font-size:clamp(64px,13vw,200px);font-weight:600;letter-spacing:-.055em;line-height:.9;background:linear-gradient(100deg,#ece8de 0 38%,#2b806b 46%,#b8841f 54%,#ce461a 62%,#ece8de 70% 100%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 7s linear infinite;padding-bottom:.06em}
+@keyframes sweep{from{background-position:100% 0}to{background-position:0 0}}
+.ft-c{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.ft-c a{color:var(--bone);text-decoration:none;font-size:24px;font-weight:600;border-bottom:2px solid var(--rust);padding-bottom:4px}
+.ft-c a span{color:var(--rust)}.ft-c a:hover{color:var(--rust)}
+.ft-b{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-top:56px;padding-top:0;background:linear-gradient(#2a2d33,#2a2d33) top left/100% 1px no-repeat content-box}
+.ft-b>p{padding-top:24px}
+.ft-o{max-width:640px;color:#b4b1a3;font-size:16px;line-height:1.5}.ft-o b{color:var(--bone);font-weight:600}
+.ft-cp{color:#8d8b80;font-size:15px}
+@media (prefers-reduced-motion:reduce){.ps i,.ft-w{animation:none}}
+@media (max-width:760px){.ft-g{gap:28px}.ft-c a{font-size:20px}.ft-b{margin-top:36px}.ps{margin-bottom:36px}.band{padding-bottom:40px}}
 </style>
 </head>
 <body>
@@ -598,6 +617,11 @@ html,body{max-width:100%;overflow-x:hidden}
 </header>
 <div class="tip" id="tip"></div>
 <main class="wrap" id="app"></main>
+<footer class="ft" id="ft"><div class="ps" id="ps" aria-hidden="true"></div>
+  <div class="in ft-g"><div class="ft-l"><div class="ft-w" aria-hidden="true">CryptoRot</div></div>
+    <div class="ft-r"><div class="ft-c"><a href="https://www.linkedin.com/in/rohitkumarvn" target="_blank" rel="noopener">LinkedIn <span>&#8599;</span></a><a href="https://rk01.tech" target="_blank" rel="noopener">rk01.tech <span>&#8599;</span></a></div></div></div>
+  <div class="in ft-b"><p class="ft-o"><b>Built and owned by rk.</b> CryptoRot, its engine, rules, benchmark data and design are proprietary. No part of it may be copied, scraped, reproduced or resold without written permission.</p><p class="ft-cp">© 2026 rk. All rights reserved.</p></div></footer>
+
 
 <script>
 const DATA = /*DATA*/;
