@@ -1,4 +1,4 @@
-"""CryptoRot scan service. Proprietary. Copyright (c) 2026 Rohitkumar V Navalgund. All rights reserved.
+"""CryptoRot scan service. Proprietary. Copyright (c) 2026 rk. All rights reserved.
 
 Receives Python source, returns findings. The rules and the resolver stay on
 this machine; clients only ever see the report.

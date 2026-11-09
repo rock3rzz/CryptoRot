@@ -301,6 +301,67 @@ function benchmark(){
    <p class="fxn" style="margin-top:14px">Counts under Today, 2030 and Quantum are shipped code only. Labels are saved in this browser.</p></div>`;
 }
 
+/* ---------- compare: head to head with other scanners ---------- */
+function compare(){
+  const T=R2.totals, M=R2.mutants, C=R2.byclock, cq=R2.tools.codeql, esc2=esc;
+  const prec=Math.round(T.real/(T.real+T.false)*100);
+  const pool=T.real+R2.missed.length, mb=R2.missed.filter(m=>m.bandit).length, ms=R2.missed.filter(m=>m.semgrep).length, mc=R2.missed.filter(m=>m.codeql).length;
+  const L=R2.labels.filter(l=>l.label==='real'), order=['now','policy','quantum'], grp={now:'Broken today',policy:'Deadline 2030',quantum:'RSA and elliptic-curve keys a quantum computer breaks'}, gc={now:'#ce461a',policy:'#d9a441',quantum:'#5fb59a'};
+  const row=(name,sub,key,n)=>{
+    const cols=order.map(k=>{ const xs=L.filter(l=>l.clock===k); return `<div class="xp-g" style="flex:0 0 ${xs.length*15-3}px">${xs.map(l=>`<i style="${(key==='cryptorot'||l[key])?'background:'+gc[k]:'box-shadow:inset 0 0 0 2px #4a4d52'}" title="${esc(l.repo)}/${esc(l.file)}:${l.line}"></i>`).join('')}</div>`; }).join('');
+    return `<div class="xp-r"><div class="xp-l"><b>${name}</b><span class="xp-nn">${n}<small> of ${T.real}</small></span><span class="xp-s">${sub}</span></div><div class="xp-gs">${cols}</div></div>`;
+  };
+  const head=`<div class="xp-r xp-hd"><div class="xp-l"></div><div class="xp-gs">${order.map(k=>`<div class="xp-g" style="flex:0 0 ${L.filter(l=>l.clock===k).length*15-3}px"><span style="color:${gc[k]}">${grp[k]}</span></div>`).join('')}</div></div>`;
+  const found=k=>L.filter(l=>l[k]).length;
+  const num=(v,of,lab,sub)=>`<div class="xp-m"><div class="xp-mv">${v}<small> of ${of}</small></div><div class="xp-ml">${lab}</div><div class="xp-ms">${sub}</div></div>`;
+  const dash='<span class="xp-no">Not reported</span>';
+  const CQ=cq?null:'Not run';
+  const rows=[
+   ['What it tells you',null],
+   ['When it has to be fixed by','A due year on a clock: today, 2030, 2031 or 2035, with the standard cited','Severity and confidence','Severity','Security severity score and a precision label','Inventory with a post-quantum safety view'],
+   ['RSA, elliptic-curve and Diffie-Hellman keys',`Reports each key it can see. ${C.quantum.n} lines in round 2, all real`,`${C.quantum.bandit} of those ${C.quantum.n}`,`${C.quantum.semgrep} of those ${C.quantum.n}`,`${C.quantum.codeql} of those ${C.quantum.n}`,'Inventories pyca/cryptography use'],
+   ['What it understands in Python','hashlib, cryptography, PyCryptodome, rsa and python-ecdsa, through aliases and built-up strings','Calls by name','Patterns by name','Dataflow through the program','pyca/cryptography only, per its README'],
+   ['Where it stops','Python only. No rules yet for MD4, RC4 or 3DES','Python','Dozens of languages','Several languages','Java, Python and Go'],
+   ['Proof',null],
+   [`Weakness hidden ${M.n} ways`,`${M.cryptorot_detected} found, ${M.cryptorot_declared} declared unresolved, ${M.cryptorot_missed} silent misses`,`${M.bandit} found`,`${M.semgrep} found`,`${M.codeql} found. Its hashing query fires only on sensitive data, by design`,'Not run'],
+   [`Real weak-crypto lines found, of ${pool} known`,`${T.real}`,`${T.bandit_real+mb}`,`${T.semgrep_real+ms}`,`${T.codeql_real+mc}`,'Not run'],
+   ['Share of its flags that were real, on the lines we labelled',`${prec}% (${T.real} of ${T.real+T.false})`,`${Math.round(T.bandit_real/(T.bandit_real+T.bandit_false)*100)}% (${T.bandit_real} of ${T.bandit_real+T.bandit_false})`,`${Math.round(T.semgrep_real/(T.semgrep_real+T.semgrep_false)*100)}% (${T.semgrep_real} of ${T.semgrep_real+T.semgrep_false})`,(T.codeql_real+T.codeql_false)?`${Math.round(T.codeql_real/(T.codeql_real+T.codeql_false)*100)}% (${T.codeql_real} of ${T.codeql_real+T.codeql_false})`:'Flagged none of the labelled sites','Not run'],
+   ['Says when it cannot tell',`Yes. ${T.blind} places across the 20 projects, each with file and line, so nothing looks clean by accident`,dash,dash,dash,'Not documented'],
+   ['Evidence per finding','Step-by-step trail with a line number for every step','Rule ID and line','Rule ID and line','Query ID, line and a data-flow path for flow queries','Location in the CBOM'],
+   ['Fit',null],
+   ['Output','JSON, CBOM 1.6 and SARIF 2.1.0','csv, html, json, txt, xml and yaml','JSON and SARIF. CBOM through a third-party wrapper','SARIF and CSV','CycloneDX CBOM'],
+   ['To run it','Python 3 standard library. One folder, no build','pip install','pip install. Rules come from the registry','Build a database, then run queries','A SonarQube server with the plugin']
+  ];
+  const tb=rows.map(r=>r[1]===null?`<tr class="xp-sec"><th>${r[0]}</th><td class="xp-cr"></td><td colspan="4"></td></tr>`:`<tr><th scope="row">${r[0]}</th><td class="xp-cr">${r[1]}</td>${r.slice(2).map(c=>`<td>${c==='Not run'?'<span class="xp-no">Not run</span>':c}</td>`).join('')}</tr>`).join('');
+  const rp=R2.repos.map(r=>`<tr><td><b>${esc(r.name)}</b></td><td class="m">${r.commit}</td><td class="num">${r.files.toLocaleString()}</td><td class="num">${(r.loc/1000).toFixed(0)}k</td><td class="num">${r.shipped}</td><td class="num">${r.bandit}</td><td class="num">${r.semgrep}</td><td class="num">${r.codeql==null?'–':r.codeql}</td><td class="num">${r.lab.real}/${r.lab.false}/${r.lab.unsure}</td></tr>`).join('');
+  const lab=R2.labels.map(l=>`<tr><td class="m">${esc(l.repo)}/${esc(l.file)}:${l.line}</td><td>${esc(l.primitive)}</td><td>${esc(l.clock)}</td><td class="xp-lb-${l.label}">${l.label}</td><td class="num">${l.bandit?'yes':'–'}</td><td class="num">${l.semgrep?'yes':'–'}</td><td>${esc(l.why)}</td></tr>`).join('');
+  const ms_=R2.missed.map(m=>`<tr><td class="m">${esc(m.repo)}/${esc(m.file)}:${m.line}</td><td>${esc(m.what)}</td><td class="num">${m.bandit?'yes':'–'}</td><td class="num">${m.semgrep?'yes':'–'}</td><td class="num">${m.codeql?'yes':'–'}</td></tr>`).join('');
+  return `<div class="how xp" style="max-width:none"><p class="kick m">Compare</p><h1 class="hl">We ran Bandit, Semgrep and CodeQL on the same code</h1>
+   <p class="lead" style="max-width:780px">We pointed 4 scanners at 20 more open-source Python projects, ${T.files.toLocaleString()} files and ${(T.loc/1e6).toFixed(1)} million lines, none of which our rules were tuned on. A finding is one line of code that uses a broken or expiring hash, cipher or key, such as <span class="m">hashlib.md5(data)</span> or <span class="m">rsa.generate_private_key(...)</span>. CryptoRot reported ${T.shipped} of them in the code these projects ship. We read the code around each one and marked it real or false alarm. Every verdict is listed below so you can disagree.</p>
+   <section class="xp-dark"><div class="xp-in">
+    <h2>${T.real} lines of real weak cryptography, and who found them</h2>
+    <p class="xp-p">Of CryptoRot's ${T.shipped} findings, ${T.real} were real: the program genuinely uses MD5, SHA-1, ECB mode, or an RSA or elliptic-curve key that a quantum computer will break. ${T.false} were false alarms, such as an MD5 used only to make a cache key, and ${T.unsure} were borderline. Each square is one of the ${T.real} real lines. A filled square means that tool reported the line.</p>
+    ${head}${row('CryptoRot','Proof trail, due year',"cryptorot",T.real)}${row('Bandit','1.9.4',"bandit",found('bandit'))}${row('Semgrep','1.184, p/python',"semgrep",found('semgrep'))}${row('CodeQL','python-security-extended',"codeql",found('codeql'))}
+    <p class="xp-p" style="margin-top:22px">This set starts from CryptoRot's own output, so it cannot show what CryptoRot missed. Bandit and Semgrep also reported ${R2.missed.length} real weak ciphers that CryptoRot has no rule for (MD4, RC4 and 3DES), listed further down. Counting those too, ${pool} real lines are known. CryptoRot reported ${T.real} of the ${pool}.</p>
+    <h3 class="xp-h3">Hiding the same weakness ${M.n} different ways</h3>
+    <p class="xp-p" style="margin-bottom:0">We wrote ${M.n} small programs that use a known weak primitive, each written the way real code varies it: hashlib imported under another name, the word md5 built from two strings, the algorithm passed through a helper function. This is how many each tool caught.</p>
+    <div class="xp-ms3">${num(M.cryptorot_detected,M.n,'CryptoRot',`${M.cryptorot_declared} more reported as unable to tell, ${M.cryptorot_missed} missed in silence`)}${num(M.bandit,M.n,'Bandit',`${M.n-M.bandit} missed in silence`)}${num(M.semgrep,M.n,'Semgrep',`${M.n-M.semgrep} missed in silence`)}${num(M.codeql,M.n,'CodeQL',`${M.n-M.codeql} missed in silence`)}</div>
+   </div></section>
+   <h2 class="xp-h">Why CryptoRot, side by side</h2>
+   <div class="tw"><table class="xp-t"><thead><tr><th></th><th class="xp-cr">CryptoRot 0.4</th><th>Bandit</th><th>Semgrep</th><th>CodeQL</th><th>IBM CBOMkit<small>Sonar Cryptography plugin</small></th></tr></thead><tbody>${tb}</tbody></table></div>
+   <p class="fxn">Bandit 1.9.4, Semgrep 1.184.0 with the p/python registry rules, CodeQL with the python-security-extended suite, all run on ${R2.date}. Rows marked Not run were not measured. CBOMkit was read from its documentation: it runs inside SonarQube, which we did not set up. The ${M.n} rewrites were written by us, so they show what each tool can follow, not how often real code is written that way. CodeQL was the most precise of the others, ${T.codeql_real} of ${T.codeql_real+T.codeql_false} flags real, and it reported ${T.codeql_real} of the ${T.real} real lines. CryptoRot reported ${T.real} real lines and raised ${T.false} false alarms, and bringing that number down is the main work left.</p>
+   <h2 class="xp-h">What CryptoRot misses</h2>
+   <p class="lead" style="margin:0 0 20px;max-width:720px">Bandit and Semgrep reported weak ciphers that CryptoRot has no rule for yet: MD4, RC4 and 3DES. Adding them is the first item on the list of what is still open.</p>
+   <div class="tw"><table class="xp-t xp-t2"><thead><tr><th>Where</th><th>What</th><th class="num">Bandit</th><th class="num">Semgrep</th><th class="num">CodeQL</th></tr></thead><tbody>${ms_}</tbody></table></div>
+   <h2 class="xp-h">The 20 projects</h2>
+   <div class="tw"><table class="xp-t xp-t2"><thead><tr><th>Project</th><th>Commit</th><th class="num">Files</th><th class="num">Lines</th><th class="num">CryptoRot, shipped</th><th class="num">Bandit</th><th class="num">Semgrep</th><th class="num">CodeQL</th><th class="num">Real / false / unsure</th></tr></thead><tbody>${rp}</tbody></table></div>
+   <p class="fxn">Bandit, Semgrep and CodeQL counts are crypto-related rules only, tests and examples included. CryptoRot counts are shipped code, benign classifications left out. Precision is real divided by real plus false: ${T.real} of ${T.real+T.false}, which is ${prec}%, with ${T.unsure} left unsure. The round 1 benchmark scored 61%.</p>
+   <details class="xp-d"><summary>All ${R2.labels.length} labels, with the reason for each</summary><div class="tw"><table class="xp-t xp-t2"><thead><tr><th>Where</th><th>Primitive</th><th>Clock</th><th>Label</th><th class="num">Bandit</th><th class="num">Semgrep</th><th>Reason</th></tr></thead><tbody>${lab}</tbody></table></div></details>
+   <h2 class="xp-h">How the 20 were chosen</h2>
+   <p class="lead" style="margin:0 0 16px;max-width:720px">GitHub search: <span class="m">${esc(R2.rule)}</span>. Repositories were taken in order of stars, skipping any already in the round 1 benchmark. They lean towards security tooling, which uses cryptography more than most code, so the counts here are higher than they would be on a random project. One person labelled the findings, and that person also wrote the scanner. An independent second labeller is still to do.</p>
+   <p class="fxn">To repeat it: <span class="m">bench/fetch2.sh</span> then <span class="m">python3 bench/round2.py</span>. Commits are in <span class="m">bench/pins2.json</span>, labels in <span class="m">bench/labels2.json</span>.</p></div>`;
+}
+
 /* ---------- scan workbench ---------- */
 const SAMPLE=`import hashlib as h
 from Crypto.Cipher import AES

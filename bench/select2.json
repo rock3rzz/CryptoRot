@@ -1,0 +1,57 @@
+{
+ "rule": "language:python topic:security stars:>1500 pushed:>2026-10-15 archived:false | repo size <= 300 MB | 50-2500 .py files | first 20 by stars, skipping projects already in round 1",
+ "skipped": [
+  [
+   "swisskyrepo/PayloadsAllTheThings",
+   "only 10 py files"
+  ],
+  [
+   "mitmproxy/mitmproxy",
+   "already in benchmark"
+  ],
+  [
+   "StevenBlack/hosts",
+   "repo over 300 MB"
+  ],
+  [
+   "trailofbits/algo",
+   "only 35 py files"
+  ],
+  [
+   "goauthentik/authentik",
+   "repo over 300 MB"
+  ],
+  [
+   "eosphoros-ai/DB-GPT",
+   "repo over 300 MB"
+  ],
+  [
+   "prowler-cloud/prowler",
+   "repo over 300 MB"
+  ],
+  [
+   "qazbnm456/awesome-web-security",
+   "only 10 py files"
+  ],
+  [
+   "SigmaHQ/sigma",
+   "only 9 py files"
+  ],
+  [
+   "bunkerity/bunkerweb",
+   "repo over 300 MB"
+  ],
+  [
+   "frappe/frappe",
+   "repo over 300 MB"
+  ],
+  [
+   "0xInfection/Awesome-WAF",
+   "only 1 py files"
+  ],
+  [
+   "reddelexc/hackerone-reports",
+   "only 4 py files"
+  ]
+ ]
+}

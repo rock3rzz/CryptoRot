@@ -10,6 +10,7 @@ def font(fam,slug,w):
     return f"@font-face{{font-family:'{fam}';font-weight:{w};font-style:normal;font-display:swap;src:url(data:font/woff2;base64,{b}) format('woff2')}}"
 fonts='\n'.join([font('Familjen Grotesk','familjen-grotesk',w) for w in (400,500,600)]+[font('Commit Mono','commit-mono',w) for w in (400,500)])
 data=json.load(open('web/data/findings.json'))
+round2=json.load(open('web/data/round2.json'))
 icon=open('web/assets/logo.svg').read()
 logo=re.sub(r'viewBox="[^"]*"','viewBox="44 32 150 188"',icon,count=1)
 eng={n:open(p).read() for n,p in [('rules.py','engine/rules.py'),('model.py','engine/model.py'),('ast_scanner.py','engine/ast_scanner.py'),('report.py','engine/report.py'),('selftest.py','engine/selftest.py'),('adapter.py','web/adapter.py')]}
@@ -19,7 +20,7 @@ open(_hw+'/ex.py','w').write(_code)
 _how=dict(code=_code.rstrip('\n'),finding=_rep.analyze(_hw)['findings'][0])
 boot="""(function(){ requestAnimationFrame(exTick);const h=location.hash.slice(1); if(PAGES.includes(h)) S.page=h; render();})();"""
 html=open('web/src/template.html').read()
-for k,v in [('/*API*/',json.dumps(os.environ.get('CR_API','http://localhost:8000'))),('/*FONTS*/',fonts),('/*DATA*/',json.dumps(data,separators=(',',':'))),('/*META*/',json.dumps(adapter.meta())),('/*HOW*/',json.dumps(_how)),
+for k,v in [('/*API*/',json.dumps(os.environ.get('CR_API','http://localhost:8000'))),('/*FONTS*/',fonts),('/*DATA*/',json.dumps(data,separators=(',',':'))),('/*R2*/',json.dumps(round2,separators=(',',':'))),('/*META*/',json.dumps(adapter.meta())),('/*HOW*/',json.dumps(_how)),
             ('/*APP*/',open('web/src/app.js').read()),('/*VIEWS*/',open('web/src/icons.js').read()+open('web/src/field.js').read()+open('web/src/views.js').read()+open('web/src/motion.js').read()),('/*BOOT*/',boot),('/*LOGO*/',logo),('/*ICON64*/',base64.b64encode(open('web/assets/favicon.svg').read().encode()).decode())]:
     html=html.replace(k,v) if k not in ('/*APP*/','/*VIEWS*/','/*BOOT*/') else html.replace(k,(lambda s:s)(v),1)
 os.makedirs('public',exist_ok=True); open('public/index.html','w').write(html); print(len(html)//1024,'KB')

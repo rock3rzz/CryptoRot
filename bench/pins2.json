@@ -1,0 +1,122 @@
+[
+ {
+  "name": "strix",
+  "url": "https://github.com/usestrix/strix",
+  "commit": "215482eb2204cd30ac6b87520e3f5c6511e2e2e8",
+  "stars": 74523
+ },
+ {
+  "name": "fail2ban",
+  "url": "https://github.com/fail2ban/fail2ban",
+  "commit": "d0f70eba16782539e3b97f823d70573c6e4c582b",
+  "stars": 18979
+ },
+ {
+  "name": "mvt",
+  "url": "https://github.com/mvt-project/mvt",
+  "commit": "c9190e05ef4c67df6407bc8b2adbd904954b9388",
+  "stars": 15911
+ },
+ {
+  "name": "dirsearch",
+  "url": "https://github.com/maurosoria/dirsearch",
+  "commit": "461705af2688ab6644b1f2bf738c46c55ee4d3da",
+  "stars": 15057
+ },
+ {
+  "name": "scapy",
+  "url": "https://github.com/secdev/scapy",
+  "commit": "d2a43b525e145969fae36e42adfb4de8341fbcb8",
+  "stars": 12683
+ },
+ {
+  "name": "objection",
+  "url": "https://github.com/sensepost/objection",
+  "commit": "3ef6f9bdcd64c6181a1b01eb11104b7204ec6308",
+  "stars": 9495
+ },
+ {
+  "name": "maltrail",
+  "url": "https://github.com/stamparm/maltrail",
+  "commit": "c76a8b35fa0c77cc700ca98fc16a639213894944",
+  "stars": 8654
+ },
+ {
+  "name": "bandit",
+  "url": "https://github.com/PyCQA/bandit",
+  "commit": "48ef27bd1bbc32f4e585c92310f7a574e87f6b04",
+  "stars": 8378
+ },
+ {
+  "name": "AI-Infra-Guard",
+  "url": "https://github.com/Tencent/AI-Infra-Guard",
+  "commit": "76146bf479b2fedb34f7acb7f536aa37b1f8ba74",
+  "stars": 7442
+ },
+ {
+  "name": "bleachbit",
+  "url": "https://github.com/bleachbit/bleachbit",
+  "commit": "a117dead0921dc62c50af4a1327ccc2247f5857c",
+  "stars": 7418
+ },
+ {
+  "name": "NetAlertX",
+  "url": "https://github.com/netalertx/NetAlertX",
+  "commit": "1046b400d116b327065ec19a35f302579dc72592",
+  "stars": 7396
+ },
+ {
+  "name": "pyWhat",
+  "url": "https://github.com/bee-san/pyWhat",
+  "commit": "eeca660fac35f32ffe975ddc49fb6a38046d6d9a",
+  "stars": 7346
+ },
+ {
+  "name": "onionshare",
+  "url": "https://github.com/onionshare/onionshare",
+  "commit": "53d496b7fc129085b420e4f2eea96d7b75e408bb",
+  "stars": 7218
+ },
+ {
+  "name": "CTFd",
+  "url": "https://github.com/CTFd/CTFd",
+  "commit": "a6a81ddd921cd74f8aabc07c0f7a71cdcf5365b6",
+  "stars": 6902
+ },
+ {
+  "name": "faraday",
+  "url": "https://github.com/infobyte/faraday",
+  "commit": "d00e81cd9c0279e9fa7cc48d80e52f5ced820cb1",
+  "stars": 6847
+ },
+ {
+  "name": "cowrie",
+  "url": "https://github.com/cowrie/cowrie",
+  "commit": "ea9513eda9ea0dac05f6ace7db84ca95e0571501",
+  "stars": 6665
+ },
+ {
+  "name": "agent-governance-toolkit",
+  "url": "https://github.com/microsoft/agent-governance-toolkit",
+  "commit": "fa310ff19ba6c6d017520fbf132e85059b181931",
+  "stars": 6545
+ },
+ {
+  "name": "NetExec",
+  "url": "https://github.com/Pennyw0rth/NetExec",
+  "commit": "917fcebc3bb97085dcc84555aa277cb7ea05f9f1",
+  "stars": 5984
+ },
+ {
+  "name": "Nettacker",
+  "url": "https://github.com/OWASP/Nettacker",
+  "commit": "f333cee7a56acd887205efa7442f113ec6515c1e",
+  "stars": 5718
+ },
+ {
+  "name": "clusterfuzz",
+  "url": "https://github.com/google/clusterfuzz",
+  "commit": "77bbad2432fb931906c523786defac928d12afdb",
+  "stars": 5632
+ }
+]

@@ -3,6 +3,7 @@ const ICON={
  scan:'<path d="M8 6 3 12l5 6M16 6l5 6-5 6"/><rect class="ac" x="10.75" y="10.75" width="2.5" height="2.5"/>',
  projects:'<rect x="3.5" y="3.5" width="7" height="7"/><rect x="13.5" y="3.5" width="7" height="7"/><rect x="3.5" y="13.5" width="7" height="7"/><rect class="ac" x="15" y="15" width="4" height="4"/>',
  benchmark:'<path d="M4 20V4M4 20h16"/><path d="M8.5 16v-4M12.5 16V9M16.5 16v-6"/><rect class="ac" x="11.25" y="5" width="2.5" height="2.5"/>',
+ compare:'<rect x="3.5" y="4" width="7" height="16"/><rect x="13.5" y="4" width="7" height="16"/><rect class="ac" x="15.5" y="6" width="3" height="3"/>',
  selftest:'<rect x="3.5" y="3.5" width="17" height="17"/><path d="m7.5 12 3 3 6-6.5"/><rect class="ac" x="16" y="3.5" width="4.5" height="4.5" opacity="0"/>',
  how:'<rect x="3.5" y="4" width="5" height="5"/><rect class="ac" x="15.5" y="15" width="5" height="5"/><path d="M8.5 6.5h4.5a3 3 0 0 1 3 3V15"/>',
  now:'<rect x="3.5" y="3.5" width="17" height="17"/><path d="M12 7.5V12l3.5 2"/><rect class="ac" x="10.75" y="10.75" width="2.5" height="2.5"/>',

@@ -1,0 +1,912 @@
+[
+ {
+  "id": 1,
+  "repo": "strix",
+  "file": "strix/telemetry/posthog.py",
+  "line": 25,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "false",
+  "why": "A public project key meant to ship in clients. Not a secret."
+ },
+ {
+  "id": 2,
+  "repo": "mvt",
+  "file": "src/mvt/android/artifacts/dumpsys_adb.py",
+  "line": 163,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "unsure",
+  "why": "MD5 key fingerprint in ADB's display format. Identification, borderline."
+ },
+ {
+  "id": 3,
+  "repo": "mvt",
+  "file": "src/mvt/android/parsers/backup.py",
+  "line": 80,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "SHA-1 inside a key-derivation function that a file or protocol format requires. Real use, on the policy clock."
+ },
+ {
+  "id": 4,
+  "repo": "mvt",
+  "file": "src/mvt/android/parsers/backup.py",
+  "line": 113,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "SHA-1 inside a key-derivation function that a file or protocol format requires. Real use, on the policy clock."
+ },
+ {
+  "id": 5,
+  "repo": "scapy",
+  "file": "scapy/contrib/tacacs.py",
+  "line": 46,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 6,
+  "repo": "scapy",
+  "file": "scapy/layers/inet.py",
+  "line": 740,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 7,
+  "repo": "scapy",
+  "file": "scapy/layers/inet6.py",
+  "line": 2398,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 8,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 151,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 9,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 155,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 10,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 188,
+  "primitive": "ecb_mode",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 11,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 189,
+  "primitive": "ecb_mode",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 12,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 227,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 13,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 233,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 14,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 246,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 15,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 248,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 16,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 255,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 17,
+  "repo": "scapy",
+  "file": "scapy/layers/msrpce/msnrpc.py",
+  "line": 257,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 18,
+  "repo": "scapy",
+  "file": "scapy/layers/radius.py",
+  "line": 1341,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 19,
+  "repo": "scapy",
+  "file": "scapy/layers/smbserver.py",
+  "line": 1051,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 20,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 183,
+  "primitive": "weak_key",
+  "clock": "now",
+  "label": "false",
+  "why": "Feature probe: the code builds a key only to test whether the library supports it."
+ },
+ {
+  "id": 21,
+  "repo": "scapy",
+  "file": "scapy/libs/rfc3961.py",
+  "line": 956,
+  "primitive": "ecb_mode",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 22,
+  "repo": "scapy",
+  "file": "scapy/utils6.py",
+  "line": 462,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 23,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 1980,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 24,
+  "repo": "scapy",
+  "file": "scapy/libs/rfc3961.py",
+  "line": 926,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "SHA-1 inside a key-derivation function that a file or protocol format requires. Real use, on the policy clock."
+ },
+ {
+  "id": 25,
+  "repo": "scapy",
+  "file": "scapy/modules/krack/automaton.py",
+  "line": 190,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "SHA-1 inside a key-derivation function that a file or protocol format requires. Real use, on the policy clock."
+ },
+ {
+  "id": 26,
+  "repo": "scapy",
+  "file": "scapy/tools/UTscapy.py",
+  "line": 462,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 27,
+  "repo": "scapy",
+  "file": "scapy/utils6.py",
+  "line": 431,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 28,
+  "repo": "scapy",
+  "file": "scapy/config.py",
+  "line": 776,
+  "primitive": "ecdh",
+  "clock": "quantum",
+  "label": "false",
+  "why": "Feature probe: the code builds a key only to test whether the library supports it."
+ },
+ {
+  "id": 29,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 183,
+  "primitive": "rsa",
+  "clock": "quantum",
+  "label": "false",
+  "why": "Feature probe: the code builds a key only to test whether the library supports it."
+ },
+ {
+  "id": 30,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 458,
+  "primitive": "rsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 31,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 463,
+  "primitive": "rsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 32,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 818,
+  "primitive": "rsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 33,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 823,
+  "primitive": "rsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 34,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 516,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 35,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/cert.py",
+  "line": 899,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 36,
+  "repo": "scapy",
+  "file": "scapy/layers/tls/crypto/groups.py",
+  "line": 526,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 39,
+  "repo": "maltrail",
+  "file": "core/provenance.py",
+  "line": 46,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 40,
+  "repo": "maltrail",
+  "file": "core/quic_sni.py",
+  "line": 148,
+  "primitive": "ecb_mode",
+  "clock": "now",
+  "label": "false",
+  "why": "AES-ECB on a single block, which QUIC specifies for header protection. Not bulk encryption."
+ },
+ {
+  "id": 41,
+  "repo": "maltrail",
+  "file": "core/tls_intel.py",
+  "line": 97,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 42,
+  "repo": "maltrail",
+  "file": "core/trailsbin.py",
+  "line": 59,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 43,
+  "repo": "maltrail",
+  "file": "sensor/tools/refnet.py",
+  "line": 273,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "SHA-1 of a generated test certificate in a data generator."
+ },
+ {
+  "id": 44,
+  "repo": "AI-Infra-Guard",
+  "file": "Research/SkillJack/skilljack/cross_system_experiment.py",
+  "line": 271,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 45,
+  "repo": "AI-Infra-Guard",
+  "file": "Research/pikit/pikit/targets/deepseek_api.py",
+  "line": 25,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "real",
+  "why": "Live-looking API key written in the source."
+ },
+ {
+  "id": 46,
+  "repo": "bleachbit",
+  "file": "bleachbit/Cleaner.py",
+  "line": 826,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "false",
+  "why": "A dictionary or constant name that contains the word key. Not a key."
+ },
+ {
+  "id": 47,
+  "repo": "bleachbit",
+  "file": "bleachbit/Cleaner.py",
+  "line": 857,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "false",
+  "why": "A dictionary or constant name that contains the word key. Not a key."
+ },
+ {
+  "id": 48,
+  "repo": "bleachbit",
+  "file": "windows/setup.py",
+  "line": 73,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "false",
+  "why": "A Windows registry path, not a key."
+ },
+ {
+  "id": 49,
+  "repo": "NetAlertX",
+  "file": "server/plugins/_publisher_mqtt/mqtt.py",
+  "line": 45,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 50,
+  "repo": "NetAlertX",
+  "file": "server/plugins/_publisher_mqtt/mqtt.py",
+  "line": 214,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 51,
+  "repo": "NetAlertX",
+  "file": "server/utils/crypto_utils.py",
+  "line": 72,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 52,
+  "repo": "CTFd",
+  "file": "CTFd/cache/__init__.py",
+  "line": 122,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 53,
+  "repo": "CTFd",
+  "file": "populate.py",
+  "line": 204,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 54,
+  "repo": "CTFd",
+  "file": "CTFd/utils/uploads/__init__.py",
+  "line": 76,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 55,
+  "repo": "cowrie",
+  "file": "src/cowrie/commands/ping.py",
+  "line": 82,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 56,
+  "repo": "cowrie",
+  "file": "src/cowrie/commands/ssh.py",
+  "line": 99,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 57,
+  "repo": "cowrie",
+  "file": "src/cowrie/commands/yum.py",
+  "line": 79,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 58,
+  "repo": "cowrie",
+  "file": "src/cowrie/commands/yum.py",
+  "line": 80,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 59,
+  "repo": "cowrie",
+  "file": "src/cowrie/ssh/keys.py",
+  "line": 38,
+  "primitive": "rsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 60,
+  "repo": "cowrie",
+  "file": "src/cowrie/ssh/keys.py",
+  "line": 54,
+  "primitive": "rsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 61,
+  "repo": "cowrie",
+  "file": "src/cowrie/ssh/keys.py",
+  "line": 78,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 62,
+  "repo": "cowrie",
+  "file": "src/cowrie/ssh/keys.py",
+  "line": 90,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 63,
+  "repo": "cowrie",
+  "file": "src/cowrie/ssh/keys.py",
+  "line": 110,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 64,
+  "repo": "cowrie",
+  "file": "src/cowrie/ssh/keys.py",
+  "line": 122,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 67,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/src/agentmesh/integrations/http_middleware.py",
+  "line": 75,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "false",
+  "why": "An HTTP header name, not a key."
+ },
+ {
+  "id": 68,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/packages/mcp-trust-server/src/mcp_trust_server/server.py",
+  "line": 159,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 69,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/src/agentmesh/core/identity/ca.py",
+  "line": 150,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 70,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/src/agentmesh/identity/agent_id.py",
+  "line": 172,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 71,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/src/agentmesh/identity/keystore.py",
+  "line": 137,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 72,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/src/agentmesh/identity/rotation.py",
+  "line": 72,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 73,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/src/agentmesh/identity/tee_keystore.py",
+  "line": 187,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 74,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-mesh/src/agentmesh/identity/tee_keystore.py",
+  "line": 251,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 75,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-os/modules/iatp/iatp/attestation.py",
+  "line": 245,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 76,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-os/modules/nexus/crypto.py",
+  "line": 36,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 77,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-os/src/agent_os/cli/cmd_sign.py",
+  "line": 87,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 78,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agent-sre/src/agent_sre/signing.py",
+  "line": 94,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 79,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agentmesh-integrations/dify/identity.py",
+  "line": 112,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 80,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agentmesh-integrations/langchain-agentmesh/langchain_agentmesh/identity.py",
+  "line": 120,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 81,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agentmesh-integrations/langgraph-trust/langgraph_trust/identity.py",
+  "line": 70,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 82,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agentmesh-integrations/llamaindex-agentmesh/llama_index/agent/agentmesh/identity.py",
+  "line": 73,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 83,
+  "repo": "agent-governance-toolkit",
+  "file": "agent-governance-python/agentmesh-integrations/structural-authz-agentmesh/structural_authz_agentmesh/trust.py",
+  "line": 668,
+  "primitive": "ecdsa",
+  "clock": "quantum",
+  "label": "real",
+  "why": "Asymmetric key generation. Real use, exposed on the quantum clock."
+ },
+ {
+  "id": 86,
+  "repo": "NetExec",
+  "file": "nxc/modules/rclone.py",
+  "line": 82,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "unsure",
+  "why": "AES key that is rclone's published constant for its password obfuscation. Interoperability, borderline."
+ },
+ {
+  "id": 87,
+  "repo": "NetExec",
+  "file": "nxc/modules/vnc.py",
+  "line": 182,
+  "primitive": "ecb_mode",
+  "clock": "now",
+  "label": "real",
+  "why": "Weak primitive that a network protocol implementation uses to authenticate or encrypt. Real use, protocol-mandated."
+ },
+ {
+  "id": 88,
+  "repo": "NetExec",
+  "file": "nxc/modules/wcc.py",
+  "line": 457,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "false",
+  "why": "A Windows registry path, not a key."
+ },
+ {
+  "id": 89,
+  "repo": "NetExec",
+  "file": "nxc/helpers/firefox.py",
+  "line": 321,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "SHA-1 inside a key-derivation function that a file or protocol format requires. Real use, on the policy clock."
+ },
+ {
+  "id": 90,
+  "repo": "NetExec",
+  "file": "nxc/helpers/firefox.py",
+  "line": 323,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "SHA-1 inside a key-derivation function that a file or protocol format requires. Real use, on the policy clock."
+ },
+ {
+  "id": 91,
+  "repo": "NetExec",
+  "file": "nxc/helpers/firefox.py",
+  "line": 342,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "real",
+  "why": "SHA-1 inside a key-derivation function that a file or protocol format requires. Real use, on the policy clock."
+ },
+ {
+  "id": 92,
+  "repo": "Nettacker",
+  "file": "nettacker/core/utils/common.py",
+  "line": 257,
+  "primitive": "md5",
+  "clock": "now",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 93,
+  "repo": "clusterfuzz",
+  "file": "src/clusterfuzz/_internal/platforms/android/constants.py",
+  "line": 42,
+  "primitive": "hardcoded_key",
+  "clock": "now",
+  "label": "false",
+  "why": "A dictionary or constant name that contains the word key. Not a key."
+ },
+ {
+  "id": 94,
+  "repo": "clusterfuzz",
+  "file": "src/clusterfuzz/_internal/base/persistent_cache.py",
+  "line": 102,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 95,
+  "repo": "clusterfuzz",
+  "file": "src/clusterfuzz/_internal/base/utils.py",
+  "line": 777,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 96,
+  "repo": "clusterfuzz",
+  "file": "src/clusterfuzz/_internal/base/utils.py",
+  "line": 786,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ },
+ {
+  "id": 97,
+  "repo": "clusterfuzz",
+  "file": "src/clusterfuzz/_internal/base/utils.py",
+  "line": 1106,
+  "primitive": "sha1",
+  "clock": "policy",
+  "label": "false",
+  "why": "Hash used to build an ID, cache key, bucket or simulated output. No security role."
+ }
+]

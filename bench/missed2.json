@@ -1,0 +1,8 @@
+[
+ {"repo":"NetExec","file":"nxc/protocols/smb.py","line":2392,"what":"MD4 for the NTLM hash"},
+ {"repo":"NetExec","file":"nxc/protocols/wmi.py","line":559,"what":"MD4 for the NTLM hash"},
+ {"repo":"scapy","file":"scapy/libs/rfc3961.py","line":1078,"what":"RC4 (Kerberos rc4-hmac)"},
+ {"repo":"scapy","file":"scapy/modules/krack/crypto.py","line":24,"what":"RC4"},
+ {"repo":"NetExec","file":"nxc/helpers/firefox.py","line":301,"what":"3DES in CBC mode"},
+ {"repo":"NetExec","file":"nxc/helpers/firefox.py","line":330,"what":"3DES in CBC mode"}
+]

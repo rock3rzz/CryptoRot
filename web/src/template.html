@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- CryptoRot. Copyright (c) 2026 Rohitkumar V Navalgund. All rights reserved. Proprietary: copying, reuse or redistribution of this page or its data needs written permission. -->
+<!-- CryptoRot. Copyright (c) 2026 rk. All rights reserved. Proprietary: copying, reuse or redistribution of this page or its data needs written permission. -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CryptoRot: crypto-agility and post-quantum scanner for Python</title>
 <meta name="description" content="Find weak, retiring and quantum-vulnerable cryptography in Python code. Every finding gets a fix-by year. Exports a CycloneDX CBOM, SARIF, JSON and CSV.">
@@ -364,6 +364,59 @@ textarea#src{flex:1;min-width:0;border:0;background:transparent;resize:none;outl
 .dtf .dt-w>rect:last-child{stroke:#ece8dc}
 .dtf figcaption{color:#b3b0a5;max-width:none;margin-top:22px}
 @media (max-width:700px){.fig.dtf{padding:22px 14px 20px;margin-left:-4px;margin-right:-4px}}
+
+.xp-dark{background:var(--ink);color:var(--bone);margin:8px 0 56px}
+.xp-in{padding:44px 40px 40px}
+.xp-dark h2{font-size:var(--l);letter-spacing:0;margin:0 0 10px;font-weight:600}
+.xp-p{color:#b3b0a5;max-width:760px;margin:0 0 26px}
+.xp-r{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center;padding:14px 0;border-top:1px solid #34373c}
+.xp-hd{border-top:0;padding:0 0 10px}
+.xp-hd .xp-g span{font-size:var(--xs)}
+.xp-l{display:flex;flex-direction:column;gap:2px}
+.xp-l b{font-size:var(--m);font-weight:600}
+.xp-nn{font-size:var(--l);line-height:1.1;font-weight:600}
+.xp-nn small{font-size:var(--xs);color:#8a877d;font-weight:400}
+.xp-s{font-size:var(--xs);color:#8a877d}
+.xp-gs{display:flex;gap:20px;min-width:0}
+.xp-g{display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;min-width:0}
+.xp-g i{display:block;width:12px;height:12px}
+.xp-ms3{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:34px;padding-top:28px;border-top:1px solid #34373c}
+.xp-mv{font-size:var(--xl);line-height:1;letter-spacing:-.04em;font-weight:600}
+.xp-mv small{font-size:var(--s);color:#8a877d;font-weight:400;letter-spacing:0}
+.xp-ml{margin-top:10px;font-weight:500}
+.xp-ms{color:#8a877d;font-size:var(--xs);margin-top:2px}
+.xp-h3{font-size:var(--m);font-weight:600;margin:38px 0 8px;letter-spacing:0}
+.xp-h{font-size:var(--l);letter-spacing:0;font-weight:600;margin:56px 0 18px}
+.xp-t{border-collapse:collapse;width:100%;min-width:900px}
+.xp-t th,.xp-t td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line);font-size:var(--s);line-height:1.4}
+.xp-t thead th{font-weight:600;border-bottom:2px solid var(--ink);vertical-align:bottom}
+.xp-t thead th small{display:block;font-weight:400;color:var(--ink3);font-size:var(--xs);margin-top:2px}
+.xp-t tbody th{font-weight:600;width:19%;color:var(--ink)}
+.xp-t .xp-cr{background:var(--ink);color:var(--bone);width:23%}
+.xp-t thead .xp-cr{background:var(--rust);color:#fff}
+.xp-t tr.xp-sec th,.xp-t tr.xp-sec td{padding:26px 0 8px;font-size:var(--xs);color:var(--ink3);border-bottom:2px solid var(--ink);width:auto}
+.xp-t tr.xp-sec .xp-cr{background:var(--ink)}
+.xp-t tr.xp-sec th{padding-right:16px}
+
+.xp-no{color:var(--ink3)}
+.xp-cr .xp-no{color:#8a877d}
+.xp-t2{min-width:0}
+.xp-t2 th,.xp-t2 td{padding:10px 14px;font-size:var(--s)}
+.xp-t2 tbody th{width:auto}
+.xp-lb-real{color:var(--verd);font-weight:600}.xp-lb-false{color:var(--rust);font-weight:600}.xp-lb-unsure{color:#966c1e;font-weight:600}
+.xp-d{margin:22px 0 0}
+.xp-d summary{cursor:pointer;font-weight:500;display:inline;border-bottom:2px solid var(--ink);list-style:none}
+.xp-d summary::-webkit-details-marker{display:none}
+.xp-d .tw{margin-top:18px}
+@media (max-width:1000px){
+  .xp-in{padding:30px 18px 28px}
+  .xp-r{grid-template-columns:1fr;gap:10px}
+  .xp-gs{flex-wrap:wrap;gap:14px}
+  .xp-gs .xp-g{flex:0 1 auto!important;width:auto!important;max-width:100%}
+  .xp-gs{max-width:100%}
+  .xp-ms3{grid-template-columns:1fr 1fr;gap:26px}
+  .xp-mv{font-size:var(--l)}
+}
 .dt-c{font-family:'Familjen Grotesk',sans-serif;font-weight:600;fill:#fff}
 .tl-t.hi,.tl-t2.hi{fill:var(--ink);font-weight:600}
 .tl-t2{font:400 13px 'Familjen Grotesk',sans-serif;fill:var(--ink3)}
@@ -637,6 +690,7 @@ img,svg,canvas{-webkit-user-drag:none;user-drag:none}
     <button data-go="scan">Check your code</button>
     <button data-go="projects">Projects</button>
     <button data-go="benchmark">Benchmark</button>
+    <button data-go="compare">Compare</button>
     <button data-go="selftest">Self-test</button>
     <button data-go="how">How it works</button>
   </nav>
@@ -662,6 +716,7 @@ img,svg,canvas{-webkit-user-drag:none;user-drag:none}
 const DATA = /*DATA*/;
 const META = /*META*/;
 const HOW = /*HOW*/;
+const R2 = /*R2*/;
 const API = /*API*/;
 /*APP*/
 /*VIEWS*/

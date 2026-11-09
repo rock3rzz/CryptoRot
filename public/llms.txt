@@ -2,7 +2,7 @@
 
 > Static analyzer for Python that finds weak or retiring cryptography and gives each finding a fix-by year. Exports a CycloneDX 1.6 CBOM, SARIF 2.1.0, JSON and CSV.
 
-CryptoRot is proprietary software. Copyright (c) 2026 Rohitkumar V Navalgund. All rights reserved. Contact: rohitkumarvn155@gmail.com
+CryptoRot is proprietary software. Copyright (c) 2026 rk. All rights reserved.
 
 ## Pages
 
