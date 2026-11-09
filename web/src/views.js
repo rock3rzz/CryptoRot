@@ -55,7 +55,7 @@ function controls(){
       const col=now?COL.due:xs.length?COL.pend:COL.clean;
       mk+=`<button class="mk${i===cur?' on':''}" data-v="${i}" style="left:${left};background:${col}" aria-label="${esc(r.version)}"></button>`;
       const low=(+pct-lastP)<9&&!lastLow; lastP=+pct; lastLow=low; if(low) anyLow=true;
-      tl+=`<span class="tl${i===cur?' on':''}${low?' lo':''}" style="left:${left}">${esc(r.version)}<br>${r.date.slice(0,4)}</span>`; });
+      tl+=`<span class="tv${i===cur?' on':''}${low?' lo':''}" style="left:${left}">${esc(r.version)}<br>${r.date.slice(0,4)}</span>`; });
     h+=`<div class="r"><div class="n">History<small>${esc(dlabel(vs[cur].date))}, ${esc(vs[cur].version)}</small><button class="play" id="play" style="margin-top:8px">${S.play?'Stop':'Play'}</button></div><div class="tline${anyLow?' tall':''}"><div class="rail"></div>${mk}${tl}</div></div>`;
   }
   h+=`<div class="r"><div class="n">Calendar year<small>Move it forward</small></div><div class="yc"><div class="yw"><input type="range" id="yr" min="${CUR}" max="2036" step="1" value="${S.year}" style="--p:${yrPct()}%" aria-label="Calendar year">${yrTicks()}</div><div class="ro" id="yrro">${yrText()}</div></div></div>`;
@@ -219,7 +219,7 @@ function inspector(){
   if(!fi.n) big='Clean'; else if(xs.some(x=>x.clock==='now')) big='Today'; else big=String(Math.min(...xs.filter(x=>x.clock!=='benign').map(x=>x.due))||'');
   if(!big) big='Clean';
   return `<div class="path m">${esc(dir)}</div><h3>${esc(base)}</h3>
-    <div class="land">${numeral(big,col,fi.bite)}<div class="lab">${big==='Clean'?'nothing to fix':'earliest deadline'}<br>${fi.n} finding${fi.n===1?'':'s'}<br>${f.loc} lines</div></div>${groups||'<div class="empty">No weak cryptography found in this file.</div>'}`;
+    <div class="fv">${numeral(big,col,fi.bite)}<div class="lab">${big==='Clean'?'nothing to fix':'earliest deadline'}<br>${fi.n} finding${fi.n===1?'':'s'}<br>${f.loc} lines</div></div>${groups||'<div class="empty">No weak cryptography found in this file.</div>'}`;
 }
 
 /* ---------- findings sheet ---------- */
