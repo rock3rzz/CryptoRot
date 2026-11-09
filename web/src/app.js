@@ -11,7 +11,7 @@ for(const k in (DATA.reviews||{})) if(!(k in LS)) LS[k]=DATA.reviews[k];
 function saveLS(){ try{ localStorage.setItem('cryptorot_labels',JSON.stringify(LS)); }catch(e){} }
 
 /* ---------- state ---------- */
-const S={page:'overview',repo:5,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
+const S={page:'scan',repo:5,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
          year:CUR,tests:false,fix:{},trail:{},play:null,live:null,_rows:[]};
 
 /* ---------- derived data. The engine's report is never modified. ---------- */
@@ -63,13 +63,14 @@ function squarify(items,rect){
 /*VIEWS*/
 
 /* ---------- render + events ---------- */
-const PAGES=['overview','findings','benchmark','scan','selftest','how'];
+const PAGES=['scan','overview','findings','benchmark','selftest','how'];
 function render(){
   const v={overview,findings,benchmark,scan,selftest,how}[S.page];
   $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
   document.querySelectorAll('#nav button').forEach(b=>{ if(b.dataset.go===S.page) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version;
+  $('#repo').style.visibility=S.page==='scan'?'hidden':'';
   if(S.page==='overview') drawMap();
   bind();
 }

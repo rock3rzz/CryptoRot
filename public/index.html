@@ -443,15 +443,15 @@ h1.hl,.doc h2{text-wrap:balance}
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="#" data-go="overview" aria-label="CryptoRot home">
+  <a class="brand" href="#" data-go="scan" aria-label="CryptoRot home">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="44 32 150 188"><defs><mask id="ma" maskUnits="userSpaceOnUse" x="0" y="0" width="220" height="260"><rect width="220" height="260" fill="#fff"/><circle cx="100" cy="138" r="13" fill="#000"/><path d="M92,145 H108 L112,172 H88Z" fill="#000"/></mask><clipPath id="ca"><path d="M48,109 Q48,100 57,100 H143 Q152,100 152,109 V260 H48 Z"/><rect x="150" y="130" width="80" height="140"/></clipPath></defs><path d="M72,104 V74 a28,28 0 0 1 56,0 V78" fill="none" stroke="#1f6353" stroke-width="18" stroke-linejoin="round"/><g mask="url(#ma)"><g clip-path="url(#ca)"><path d="M47.99,99.99h13.02v13.02h-13.02zM60.99,99.99h13.02v13.02h-13.02zM73.99,99.99h13.02v13.02h-13.02zM86.99,99.99h13.02v13.02h-13.02zM99.99,99.99h13.02v13.02h-13.02zM112.99,99.99h13.02v13.02h-13.02zM125.99,99.99h13.02v13.02h-13.02zM138.99,99.99h13.02v13.02h-13.02zM47.99,112.99h13.02v13.02h-13.02zM60.99,112.99h13.02v13.02h-13.02zM73.99,112.99h13.02v13.02h-13.02zM86.99,112.99h13.02v13.02h-13.02zM99.99,112.99h13.02v13.02h-13.02zM112.99,112.99h13.02v13.02h-13.02zM125.99,112.99h13.02v13.02h-13.02zM138.99,112.99h13.02v13.02h-13.02zM47.99,125.99h13.02v13.02h-13.02zM60.99,125.99h13.02v13.02h-13.02zM73.99,125.99h13.02v13.02h-13.02zM86.99,125.99h13.02v13.02h-13.02zM99.99,125.99h13.02v13.02h-13.02zM112.99,125.99h13.02v13.02h-13.02zM125.99,125.99h13.02v13.02h-13.02zM138.99,125.99h13.02v13.02h-13.02zM47.99,138.99h13.02v13.02h-13.02zM60.99,138.99h13.02v13.02h-13.02zM73.99,138.99h13.02v13.02h-13.02zM86.99,138.99h13.02v13.02h-13.02zM99.99,138.99h13.02v13.02h-13.02zM112.99,138.99h13.02v13.02h-13.02zM125.99,138.99h13.02v13.02h-13.02zM47.99,151.99h13.02v13.02h-13.02zM60.99,151.99h13.02v13.02h-13.02zM73.99,151.99h13.02v13.02h-13.02zM86.99,151.99h13.02v13.02h-13.02zM99.99,151.99h13.02v13.02h-13.02zM112.99,151.99h13.02v13.02h-13.02zM47.99,164.99h13.02v13.02h-13.02zM60.99,164.99h13.02v13.02h-13.02zM73.99,164.99h13.02v13.02h-13.02zM86.99,164.99h13.02v13.02h-13.02zM99.99,164.99h13.02v13.02h-13.02zM47.99,177.99h13.02v13.02h-13.02zM60.99,177.99h13.02v13.02h-13.02zM73.99,177.99h13.02v13.02h-13.02zM86.99,177.99h13.02v13.02h-13.02zM47.99,190.99h13.02v13.02h-13.02zM60.99,190.99h13.02v13.02h-13.02z" fill="#1f6353"/><path d="M138.99,138.99h13.02v13.02h-13.02zM125.99,151.99h13.02v13.02h-13.02zM112.99,164.99h13.02v13.02h-13.02zM99.99,177.99h13.02v13.02h-13.02zM73.99,190.99h13.02v13.02h-13.02z" fill="#62583d"/><path d="M125.99,164.99h13.02v13.02h-13.02zM112.99,177.99h13.02v13.02h-13.02zM86.99,190.99h13.02v13.02h-13.02z" fill="#9d4e2a"/><path d="M125.99,190.99h13.02v13.02h-13.02zM151.99,177.99h13.02v13.02h-13.02zM164.99,203.99h13.02v13.02h-13.02zM179.29,222.19h7.17v7.17h-7.17z" fill="#ce461a"/></g></g></svg>
     <b>Crypto<i>Rot</i></b>
   </a>
   <nav class="nav" id="nav">
-    <button data-go="overview">Overview</button>
+    <button data-go="scan">Check your code</button>
+    <button data-go="overview">Sample report</button>
     <button data-go="findings">Findings</button>
     <button data-go="benchmark">Benchmark</button>
-    <button data-go="scan">Scan</button>
     <button data-go="selftest">Self-test</button>
     <button data-go="how">How it works</button>
   </nav>
@@ -484,7 +484,7 @@ for(const k in (DATA.reviews||{})) if(!(k in LS)) LS[k]=DATA.reviews[k];
 function saveLS(){ try{ localStorage.setItem('cryptorot_labels',JSON.stringify(LS)); }catch(e){} }
 
 /* ---------- state ---------- */
-const S={page:'overview',repo:5,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
+const S={page:'scan',repo:5,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
          year:CUR,tests:false,fix:{},trail:{},play:null,live:null,_rows:[]};
 
 /* ---------- derived data. The engine's report is never modified. ---------- */
@@ -851,7 +851,7 @@ def seal(data):
 function scan(){
   if(S.scode==null) S.scode=SAMPLE;
   const lines=S.scode.split('\n').length;
-  return `<div class="wb"><div class="wb-h"><div><p class="kick m">Scan</p><h1 class="hl">Paste code, see what it finds</h1></div>
+  return `<div class="wb"><div class="wb-h"><div><h1 class="hl">Check your own code</h1><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. The scan runs in your browser and nothing is uploaded.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
     <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>`;
@@ -1064,13 +1064,14 @@ function bindExplainer(){
 
 
 /* ---------- render + events ---------- */
-const PAGES=['overview','findings','benchmark','scan','selftest','how'];
+const PAGES=['scan','overview','findings','benchmark','selftest','how'];
 function render(){
   const v={overview,findings,benchmark,scan,selftest,how}[S.page];
   $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
   document.querySelectorAll('#nav button').forEach(b=>{ if(b.dataset.go===S.page) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version;
+  $('#repo').style.visibility=S.page==='scan'?'hidden':'';
   if(S.page==='overview') drawMap();
   bind();
 }

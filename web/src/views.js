@@ -316,7 +316,7 @@ def seal(data):
 function scan(){
   if(S.scode==null) S.scode=SAMPLE;
   const lines=S.scode.split('\n').length;
-  return `<div class="wb"><div class="wb-h"><div><p class="kick m">Scan</p><h1 class="hl">Paste code, see what it finds</h1></div>
+  return `<div class="wb"><div class="wb-h"><div><h1 class="hl">Check your own code</h1><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. The scan runs in your browser and nothing is uploaded.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
     <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>`;
