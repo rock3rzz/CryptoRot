@@ -269,7 +269,7 @@ function selftest(){
     return `<i data-t="<b>${esc(r.operator)}</b><span class='m'>${esc(r.family)} · ${st}</span><pre>${esc(r.code.trim())}</pre>" style="${solid?`background:${c}`:`box-shadow:inset 0 0 0 2px ${c}`}"></i>`; }).join('');
   const fam={}; rows.forEach(r=>{ const f=fam[r.family]=fam[r.family]||{n:0,a:0,b:0,d:0}; f.n++; if(r.v03==='detected') f.a++; if(r.v04==='detected') f.b++; if(r.v04==='declared') f.d++; });
   const famRows=Object.keys(fam).map(k=>`<tr><td>${esc(k)}</td><td class="num">${fam[k].n}</td><td class="num">${fam[k].a}</td><td class="num">${fam[k].b}${fam[k].d?` <span class="m" style="color:var(--ink3)">+${fam[k].d} declared</span>`:''}</td></tr>`).join('');
-  const live=S.live?(S.live.err?`<p class="msg err">Could not run: ${esc(S.live.err)}</p>`:`<p class="msg"><b>Reproduced in your browser:</b> ${S.live.same} of ${S.live.n} results identical to the table above, ${S.live.ms} ms. ${S.live.s.missed} silent misses, ${S.live.s.false_positives} false positives.</p>`):'';
+  const live=S.live?(S.live.err?`<p class="msg err">Could not run: ${esc(S.live.err)}</p>`:`<p class="msg"><b>Reproduced just now:</b> ${S.live.same} of ${S.live.n} results identical to the table above, ${S.live.ms} ms. ${S.live.s.missed} silent misses, ${S.live.s.false_positives} false positives.</p>`):'';
   const detail=Object.keys(fam).map(k=>`<details class="bsd"><summary><b>${esc(k)}</b><span class="m">${fam[k].n}</span></summary>${rows.filter(r=>r.family===k).map(r=>`<div class="stc"><div class="m">${esc(r.operator)}<span class="stt s-${r.v03}">v0.3 ${r.v03}</span><span class="stt s-${r.v04}">v0.4 ${r.v04}</span></div><pre class="code">${esc(r.code.trim())}</pre>${r.note?`<p class="fxn">${esc(r.note)}</p>`:''}</div>`).join('')}</details>`).join('');
   return `<div class="how"><p class="kick m">Does it work</p><h1 class="hl">We attack our own scanner</h1>
     <p class="lead">Studies of crypto-misuse detectors found that most misses come from code written slightly differently from the textbook example. So each known misuse below is rewritten the ways real code does it: an aliased import, a name held in a variable, a value passed through a helper. Every rewrite ends in one of three states.</p>
@@ -280,7 +280,7 @@ function selftest(){
     <div class="st"><div class="stl m">v0.3</div><div class="stg">${sq('v03')}</div><div class="stl m">v0.4</div><div class="stg">${sq('v04')}</div></div>
     <p class="fxn" style="margin:12px 0 40px">One square per rewritten misuse. Hover for the code.</p>
     <table class="rules"><thead><tr><th>Misuse</th><th class="num">Rewrites</th><th class="num">v0.3 detects</th><th class="num">v0.4 detects</th></tr></thead><tbody>${famRows}</tbody></table>
-    <div class="live"><button class="btn" id="live" style="margin-left:0">Run it live in this browser</button>${live}</div>
+    <div class="live"><button class="btn" id="live" style="margin-left:0">Run it live</button>${live}</div>
     <div class="formula"><p class="kick m">How far to trust this number</p><p>We wrote these rewrites ourselves, which makes this a regression suite. The independent measure is the benchmark on real projects. The suite shows that the holes we thought of are closed and that the scanner reports what it cannot resolve. Other holes may exist. The list is plain code in the repository, so anyone can add rewrites and rerun it.</p></div>
     <div class="sec-h"><h2>Every rewrite</h2><span class="m" style="color:var(--ink3)">Open a group to read the code and both verdicts</span></div>${detail}</div>`;
 }
@@ -322,7 +322,7 @@ function scan(){
     <p class="land-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
     <div class="land-a"><button class="cta" id="cta">Check your code</button><button class="lnk" id="seerep">See a report on a real project</button></div></section>
     ${explainer()}
-    <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. The scan runs in your browser and nothing is uploaded.</p></div>
+    <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. Your code is sent to the CryptoRot scan service over HTTPS and is not saved.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
     <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>`;
@@ -332,7 +332,7 @@ function gutter(n,rp){
   let h=''; for(let i=1;i<=n;i++){ const x=by[i]; h+=`<div>${x?`<i style="background:${fcol(x,CUR)}"></i>`:''}<span>${i}</span></div>`; } return h;
 }
 function scanOut(rp){
-  if(!rp) return '<p class="empty">The Python engine is starting, which takes a few seconds on first use. It runs the same code as the terminal and keeps your code in this browser.</p>';
+  if(!rp) return '<p class="empty">Scanning. The service runs the same engine as the terminal.</p>';
   const fs=rp.rep.findings, bs=rp.rep.blind_spots;
   if(!fs.length&&!bs.length) return '<p class="empty">Nothing found in this code.</p>';
   let h=fs.map(x=>`<article class="fn"><div class="fn-h"><span class="m">line ${x.line}</span><span class="m" style="color:${fcol(x,CUR)}">${esc(dueLong(x))}</span></div>
@@ -346,13 +346,10 @@ function scanSoon(){ clearTimeout(_st); _st=setTimeout(liveScan,450); }
 async function liveScan(){
   const m=$('#msg'); if(!m) return;
   try{
-    const t0=performance.now(), first=!PY;
-    if(first) m.textContent='Starting the engine';
-    const py=await engine(null);
-    if(S.page!=='scan') return;
-    py.runPython("shutil.rmtree('/work',ignore_errors=True)"); py.FS.mkdirTree('/work/pasted'); py.FS.writeFile('/work/pasted/pasted.py',S.scode);
-    py.globals.set('NAME','pasted code'); py.globals.set('VER','snippet');
-    S.scanRes=JSON.parse(py.runPython("json.dumps(adapter.scan_repo('/work/pasted','pasted code','snippet'))"));
+    const t0=performance.now(), code=S.scode;
+    const res=await callApi('/scan',{name:'pasted code',files:{'pasted/pasted.py':code}});
+    if(S.page!=='scan'||S.scode!==code) return;
+    S.scanRes=res;
     const n=S.scanRes.rep.findings.length, b=S.scanRes.rep.blind_spots.length;
     S.scanMsg=`${n} finding${n===1?'':'s'}${b?`, ${b} blind spot${b===1?'':'s'}`:''}, ${Math.max(1,Math.round(performance.now()-t0))} ms`;
     if($('#res')){ $('#res').innerHTML=scanOut(S.scanRes); $('#gut').innerHTML=gutter(S.scode.split('\n').length,S.scanRes); m.textContent=S.scanMsg; bindScanOut(); }

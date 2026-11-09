@@ -25,10 +25,11 @@ Organizations moving to post-quantum cryptography start with an inventory of whe
 python3 engine/cli.py path/to/project
 ```
 
-The dashboard runs the same engine in the browser through Pyodide, so code never leaves the machine.
+The dashboard talks to a scan service (`server/`) that runs the engine. The page itself ships no rules or scoring. Set `CR_API` to the service URL when building the page.
 
 ```
-python3 web/build.py        # writes public/index.html
+CR_API=https://your-service python3 web/build.py   # writes public/index.html
+uvicorn app:app --app-dir server               # run the service
 ```
 
 `public/` is a static site and deploys as is (`vercel.json` is included).

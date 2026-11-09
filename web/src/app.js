@@ -143,43 +143,33 @@ function exportJSON(){ const r=repo(); saveFile(r.name+'-report.json',JSON.strin
 async function exportStd(kind){
   const r=repo(), btn=$(kind==='cbom'?'#expc':'#exps'); const old=btn.textContent; btn.textContent='Preparing...';
   try{
-    const py=await engine(null);
-    py.globals.set('REPJSON',JSON.stringify(r.rep)); py.globals.set('NAME',r.name);
-    const out=py.runPython("import json,report\nrep=json.loads(REPJSON)\njson.dumps(report.to_cbom(rep,NAME) if '"+kind+"'=='cbom' else report.to_sarif(rep),indent=2)");
+    const out=JSON.stringify(await callApi('/export',{kind,name:r.name,rep:r.rep}),null,2);
     saveFile(r.name+(kind==='cbom'?'.cbom.json':'.sarif'),out,'application/json');
   }catch(e){ }
   btn.textContent=old;
 }
 
-/* ---------- in-browser engine (Pyodide runs the real Python files) ---------- */
-let PY=null;
-async function engine(msg){
-  if(PY) return PY;
-  if(msg) msg.textContent='Starting the Python engine. First use only, a few seconds.';
-  await new Promise((ok,no)=>{ const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js'; s.onload=ok; s.onerror=()=>no(new Error('could not load the Python runtime')); document.head.appendChild(s); });
-  const py=await loadPyodide();
-  py.FS.mkdirTree('/app/engine');
-  for(const n in ENGINE) py.FS.writeFile((n==='adapter.py'?'/app/':'/app/engine/')+n,ENGINE[n]);
-  py.runPython("import sys,json,shutil\nsys.path.insert(0,'/app')\nimport adapter");
-  return PY=py;
+/* ---------- scan service (the engine runs on the server, the page only sends source and reads the report) ---------- */
+async function callApi(path,body){
+  if(!API) throw new Error('the scan service is not connected');
+  let r; try{ r=await fetch(API+path,{method:'POST',headers:{'content-type':'application/json'},body:body?JSON.stringify(body):undefined}); }catch(e){ throw new Error('could not reach the scan service'); }
+  if(!r.ok){ let m=''; try{ m=(await r.json()).detail; }catch(e){} throw new Error(m||('scan service answered '+r.status)); }
+  return r.json();
 }
 async function doScan(inp){
   const msg=$('#msg'); msg.className='msg'; msg.textContent='Scanning...';
   try{
-    const py=await engine(msg);
-    py.runPython("shutil.rmtree('/work',ignore_errors=True)");
-    let name, ver;
+    let name, files={};
     if(inp.code!==undefined){
       if(!inp.code.trim()) throw new Error('paste some Python first');
-      py.FS.mkdirTree('/work/pasted'); py.FS.writeFile('/work/pasted/pasted.py',inp.code); name='pasted code'; ver='snippet';
+      files['pasted/pasted.py']=inp.code; name='pasted code';
     }else{
       const fl=inp.files.filter(f=>f.name.endsWith('.py')&&!/(^|\/)\.git\//.test(f.webkitRelativePath));
       if(!fl.length) throw new Error('no .py files in that folder');
-      name=(inp.files[0].webkitRelativePath||'folder').split('/')[0]; ver='local folder';
-      for(const f of fl){ const rel=f.webkitRelativePath.split('/').slice(1).join('/'); const p='/work/'+name+'/'+rel; py.FS.mkdirTree(p.slice(0,p.lastIndexOf('/'))); py.FS.writeFile(p,new Uint8Array(await f.arrayBuffer())); }
+      name=(inp.files[0].webkitRelativePath||'folder').split('/')[0];
+      for(const f of fl) files[name+'/'+f.webkitRelativePath.split('/').slice(1).join('/')]=await f.text();
     }
-    py.globals.set('NAME',name); py.globals.set('VER',ver);
-    const rp=JSON.parse(py.runPython("json.dumps(adapter.scan_repo('/work/'+('pasted' if NAME=='pasted code' else NAME),NAME,VER))"));
+    const rp=await callApi('/scan',{name,files});
     DATA.repos.push(rp); S.repo=DATA.repos.length-1; S.file=null; S.prim=null; S.cur=0; S.v=null;
     const fs=prep(rp).all, n=fs.length;
     msg.textContent=n+' finding'+(n===1?'':'s')+' in '+rp.files.length+' file'+(rp.files.length===1?'':'s')+', '+rp.rep.blind_spots.length+' blind spot'+(rp.rep.blind_spots.length===1?'':'s')+'.';
@@ -191,8 +181,8 @@ async function doScan(inp){
 async function runLive(){
   const b=$('#live'); b.textContent='Running...';
   try{
-    const py=await engine(null); const t0=performance.now();
-    const out=JSON.parse(py.runPython("import selftest\nrows,s=selftest.evaluate(selftest.scan_v04)\njson.dumps({'rows':[{'id':r['id'],'state':r['state']} for r in rows],'s':s})"));
+    const t0=performance.now();
+    const out=await callApi('/selftest');
     const ref={}; DATA.selftest.rows.forEach(r=>ref[r.id]=r.v04);
     const same=out.rows.filter(r=>ref[r.id]===r.state).length;
     S.live={n:out.rows.length,same,ms:Math.round(performance.now()-t0),s:out.s};
