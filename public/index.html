@@ -38,10 +38,12 @@ mark{background:none;color:inherit;box-shadow:inset 0 -2px var(--rust)}
 .brand b i{font-style:normal;color:var(--rust)}
 .nav{display:flex;gap:30px;margin-left:48px;height:100%}
 .nav button{font-size:18px;font-weight:500;color:var(--ink3);height:100%;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.nav button::before{content:"";width:8px;height:8px;background:transparent;flex:none}
+.nav button .ic{width:19px;height:19px}
 .nav button:hover{color:var(--ink)}
 .nav button[aria-current=page]{color:var(--ink)}
-.nav button[aria-current=page]::before{background:var(--rust)}
+.nav button[aria-current=page]{box-shadow:inset 0 -3px 0 var(--rust)}
+.ic{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:square;stroke-linejoin:miter;flex:none;display:block}
+.ic .ac{fill:var(--rust);stroke:none}
 .spacer{flex:1}
 .calc{color:var(--ink2);font-size:var(--xs);margin:10px 0 12px}
 .rg{padding:0 0 10px;margin:0 0 22px;border-bottom:1px solid var(--line)}
@@ -362,6 +364,26 @@ ol.refs li{padding-left:4px}
 .subtabs button{font-size:var(--s);font-weight:500;color:var(--ink3);padding:6px 0;border-bottom:3px solid transparent}
 .subtabs button:hover{color:var(--ink)}
 .subtabs button[aria-current=page]{color:var(--ink);border-bottom-color:var(--rust)}
+.land{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:56px;align-items:center}
+.wb-s{white-space:nowrap;align-self:flex-start}.wb-h>div:first-child{max-width:700px}
+.land .mos{width:100%;height:auto;display:block}
+.land-a .cta{display:inline-flex;align-items:center;gap:12px}
+.chk{margin:88px 0 0}.chk h2{margin:0 0 8px;font-size:var(--l);letter-spacing:-.025em;line-height:1.1;font-weight:600}
+.chk>p{margin:0 0 28px;color:var(--ink2);max-width:640px;line-height:1.5}
+.chk-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.chk-c{border:1px solid var(--ink);background:var(--paper);padding:24px 24px 22px;display:flex;flex-direction:column;gap:10px}
+.chk-c>.ic{width:44px;height:44px;stroke-width:1.4;margin-bottom:10px}
+.chk-c h3{margin:0;font-size:var(--m);font-weight:600;letter-spacing:-.01em}
+.chk-c p{margin:0;color:var(--ink2);line-height:1.5;font-size:var(--s)}
+.chk-c .when{margin-top:auto;padding-top:10px;font-weight:600;font-size:var(--s);display:flex;align-items:center;gap:8px}
+.chk-c .when .ic{width:18px;height:18px;margin:0;stroke-width:1.75}
+.pk-s{display:flex;flex-wrap:wrap;gap:3px;margin-top:12px;max-width:100%}
+.pk-s i{width:9px;height:9px;display:block}
+.btn .ic,.exps .btn{display:inline-flex;align-items:center;gap:8px}
+.btn .ic{width:16px;height:16px}
+.subbar .lnk{display:inline-flex;align-items:center;gap:8px}
+.subbar .lnk .ic{width:16px;height:16px}
+@media (max-width:1000px){ .land{grid-template-columns:1fr;gap:32px} .land .mos{max-width:380px} .chk-g{grid-template-columns:1fr} .nav button .ic{display:none} }
 .pkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
 .pk{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;border:1px solid var(--ink);background:var(--paper);padding:22px 22px 20px;cursor:pointer}
 .pk:hover{background:var(--sunk)}
@@ -551,6 +573,42 @@ function squarify(items,rect){
   while(q.length){ const side=Math.min(w,h), n=q[0]; if(!row.length||worst(row.concat([n]),side)<=worst(row,side)) { row.push(n); q.shift(); } else flush(); }
   if(row.length) flush();
   return out;
+}
+/* ---------- icon set: 24px grid, square caps, one rust pixel per icon ---------- */
+const ICON={
+ scan:'<path d="M8 6 3 12l5 6M16 6l5 6-5 6"/><rect class="ac" x="10.75" y="10.75" width="2.5" height="2.5"/>',
+ projects:'<rect x="3.5" y="3.5" width="7" height="7"/><rect x="13.5" y="3.5" width="7" height="7"/><rect x="3.5" y="13.5" width="7" height="7"/><rect class="ac" x="15" y="15" width="4" height="4"/>',
+ benchmark:'<path d="M4 20V4M4 20h16"/><path d="M8.5 16v-4M12.5 16V9M16.5 16v-6"/><rect class="ac" x="11.25" y="5" width="2.5" height="2.5"/>',
+ selftest:'<rect x="3.5" y="3.5" width="17" height="17"/><path d="m7.5 12 3 3 6-6.5"/><rect class="ac" x="16" y="3.5" width="4.5" height="4.5" opacity="0"/>',
+ how:'<rect x="3.5" y="4" width="5" height="5"/><rect class="ac" x="15.5" y="15" width="5" height="5"/><path d="M8.5 6.5h4.5a3 3 0 0 1 3 3V15"/>',
+ now:'<rect x="3.5" y="3.5" width="17" height="17"/><path d="M12 7.5V12l3.5 2"/><rect class="ac" x="10.75" y="10.75" width="2.5" height="2.5"/>',
+ year:'<rect x="3.5" y="5" width="17" height="15.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><rect class="ac" x="13.5" y="13" width="4" height="4"/>',
+ quantum:'<path d="M12 3 21 12 12 21 3 12Z"/><path d="M12 8v8M8 12h8" opacity=".0"/><rect class="ac" x="10.5" y="10.5" width="3" height="3"/>',
+ hash:'<path d="M9.5 4 7.5 20M16.5 4l-2 16M4 9h16M3.5 15h16"/><rect class="ac" x="17.5" y="17.5" width="3" height="3"/>',
+ blocks:'<rect class="ac" x="3" y="6" width="5.5" height="12"/><rect class="ac" x="9.25" y="6" width="5.5" height="12"/><rect x="15.5" y="6" width="5.5" height="12"/>',
+ key:'<rect x="3.5" y="8" width="8" height="8"/><path d="M11.5 12h9M17 12v3.5M20.5 12v2.5"/><rect class="ac" x="5.5" y="10" width="4" height="4"/>',
+ lock:'<rect x="5" y="11" width="14" height="9.5"/><path d="M8.5 11V7.5a3.5 3.5 0 0 1 7 0V11"/><rect class="ac" x="11" y="14.5" width="2" height="3"/>',
+ curve:'<path d="M3 19c6 0 5-14 9-14s3 14 9 14"/><rect class="ac" x="10.75" y="3" width="2.5" height="2.5"/>',
+ swap:'<path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/><rect class="ac" x="10.75" y="10.75" width="2.5" height="2.5" opacity="0"/>',
+ json:'<path d="M9 4H7v5l-3 3 3 3v5h2M15 4h2v5l3 3-3 3v5h-2"/><rect class="ac" x="10.75" y="10.75" width="2.5" height="2.5"/>',
+ cbom:'<path d="M4 6h16M4 12h16M4 18h9"/><rect class="ac" x="16" y="15.5" width="4" height="4"/>',
+ sarif:'<path d="M5 21V4M5 5h13l-3 4 3 4H5"/><rect class="ac" x="8" y="7.5" width="3" height="3"/>',
+ csv:'<rect x="3.5" y="4.5" width="17" height="15"/><path d="M3.5 10h17M3.5 15h17M10 4.5v15"/><rect class="ac" x="12" y="11.5" width="6" height="2.5" opacity="0"/>',
+ small:'<rect x="3.5" y="3.5" width="17" height="17"/><rect class="ac" x="9" y="9" width="6" height="6"/>',
+ arrow:'<path d="M4 12h15M13 6l6 6-6 6"/>',
+ back:'<path d="M20 12H5M11 6l-6 6 6 6"/>'
+};
+const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${ICON[n]||''}</svg>`;
+/* the rot mosaic used in the hero: a grid that dissolves from verdigris into rust */
+function mosaic(){
+  const C=15,Rw=10,S=38,G=6; let o='';
+  for(let r=0;r<Rw;r++) for(let c=0;c<C;c++){
+    if(c+r<2||(c>12&&r>7)) continue;
+    const d=c-r*0.5, v=(c*7+r*13+c*r*3);
+    const col=(d>=10&&v%2===0)?'#ce461a':(d>=8&&v%3!==0)?'#966c1e':'#1f6353';
+    o+=`<rect x="${c*(S+G)}" y="${r*(S+G)}" width="${S}" height="${S}" fill="${col}"/>`;
+  }
+  return `<svg class="mos" viewBox="0 0 ${C*(S+G)} ${Rw*(S+G)}" aria-hidden="true">${o}</svg>`;
 }
 const PRIM_ORDER=['md5','sha1','ecb_mode','hardcoded_key','weak_key','rsa','ecdsa','ecdh','dh'];
 const BLIND_NAME={'dynamic-algorithm':'Hash chosen at runtime','curve-unresolved':'Elliptic curve unknown','key-size-unresolved':'RSA key size unknown','file-unparseable':'File could not be parsed','star-import':'Star import hides names','runtime-code':'Code built at runtime'};
@@ -794,7 +852,7 @@ function findings(){
     return tr;
   }).join('');
   const b=(attr,k,l,on)=>`<button class="tx${on?' on':''}" data-${attr}="${k}">${l}</button>`;
-  return `<div class="hrow"><div><p class="kick m">${esc(r.name)} ${esc(r.version)}</p><h1 class="hl">Labelling sheet</h1></div><div class="exps"><button class="btn ghost" id="expj">JSON</button><button class="btn ghost" id="expc">CBOM</button><button class="btn ghost" id="exps">SARIF</button><button class="btn ghost" id="exp">CSV</button></div></div>
+  return `<div class="hrow"><div><p class="kick m">${esc(r.name)} ${esc(r.version)}</p><h1 class="hl">Labelling sheet</h1></div><div class="exps"><button class="btn ghost" id="expj">${ic('json',16)}JSON</button><button class="btn ghost" id="expc">${ic('cbom',16)}CBOM</button><button class="btn ghost" id="exps">${ic('sarif',16)}SARIF</button><button class="btn ghost" id="exp">${ic('csv',16)}CSV</button></div></div>
     <div class="sum">
       <div><div class="v">${labelled.length}<small> of ${all.length}</small></div><div class="t">labelled</div></div>
       <div><div class="v" style="color:var(--rust)">${real}</div><div class="t">real problems</div></div>
@@ -872,14 +930,14 @@ function scan(){
   if(S.scode==null) S.scode=SAMPLE;
   EXK='land'; if(EXS.land!==1){ EXS.land=1; EXS.t=0; EXS.shown=-1; }
   const lines=S.scode.split('\n').length;
-  return `<section class="land"><h1 class="hl">Today's encryption has an expiry date. Find it in your code.</h1>
+  return `<section class="land"><div><h1 class="hl">Today's encryption has an expiry date. Find it in your code.</h1>
     <p class="land-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
-    <div class="land-a"><button class="cta" id="cta">Check your code</button><button class="lnk" id="seerep">See a report on a real project</button></div></section>
+    <div class="land-a"><button class="cta" id="cta">Check your code ${ic('arrow',18)}</button><button class="lnk" id="seerep">See a report on a real project</button></div></div>${mosaic()}</section>
     ${explainer()}
     <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. Your code goes to the scan service over HTTPS, is scanned in memory and discarded when the scan ends. CryptoRot does not store it, log it or keep a copy. Code you cannot send can be scanned with the offline command-line version.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
-    <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>`;
+    <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>${checks()}`;
 }
 function gutter(n,rp){
   const by={}; if(rp) rp.rep.findings.forEach(x=>{ by[x.line]=x; });
@@ -971,8 +1029,23 @@ function how(){
 
 function pick(){
   const cards=DATA.repos.map((r,i)=>{ const c=tally(r), n=flat(r).filter(x=>x.clock!=='benign').length;
-    return `<button class="pk" data-open="${i}"><span class="pk-n">${esc(r.name)}</span><span class="m">${esc(r.version)}, ${r.rep.coverage.files_parsed} files</span><span class="pk-c"><b>${n}</b> finding${n===1?'':'s'}</span><span class="pk-r">${c.now} broken today</span></button>`; }).join('');
+    return `<button class="pk" data-open="${i}"><span class="pk-n">${esc(r.name)}</span><span class="m">${esc(r.version)}, ${r.rep.coverage.files_parsed} files</span><span class="pk-c"><b>${n}</b> finding${n===1?'':'s'}</span><span class="pk-r">${c.now} broken today</span><span class="pk-s" aria-hidden="true">${strip(r)}</span></button>`; }).join('');
   return `<div class="pick"><h1 class="hl">Pick a project</h1><p class="fxn" style="margin:12px 0 28px;max-width:620px">Real open-source Python projects, scanned at a pinned commit. Each opens as a report and a full findings list, with every finding's due year and proof trail.</p><div class="pkg">${cards}</div></div>`;
+}
+
+function checks(){
+  const C=[['hash','Broken hashes','MD5 collides in practice and SHA-1 is being retired. Both still turn up in signatures, checksums and password code.','now','Today and by 2030'],
+   ['blocks','ECB mode','Equal blocks of data encrypt to equal ciphertext, so the shape of the data stays visible.','now','Today'],
+   ['key','Hardcoded keys','A key committed to source is readable by everyone who can read the code.','now','Today'],
+   ['lock','RSA and Diffie-Hellman','They protect traffic that can be recorded now and opened once a large quantum computer exists.','quantum','By 2035'],
+   ['curve','Elliptic curves','Signatures and key agreement on elliptic curves are deprecated in 2030 and disallowed in 2035.','year','By 2030 and 2035'],
+   ['small','Undersized keys','Keys and curves below current minimum sizes are already brute-forceable or disallowed.','now','Today']];
+  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>Six kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c">${ic(i)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
+}
+
+function strip(r){
+  const col={now:'#ce461a',policy:'#966c1e',quantum:'#14161a'}; const xs=flat(r).filter(x=>x.clock!=='benign').slice(0,48);
+  return xs.map(x=>`<i style="background:${col[x.clock]||'#8b8a84'}"></i>`).join('');
 }
 /* ---------- home page explainer: four scenes drawn from a clock ---------- */
 const EXD=9000;
@@ -1119,7 +1192,7 @@ function render(){
   const needs=(S.page==='overview'||S.page==='findings'), v=(needs&&S.repo==null)?pick:{overview,findings,benchmark,scan,selftest,how}[S.page];
   $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
-  if(needs&&S.repo!=null){ $('#app').insertAdjacentHTML('afterbegin',`<div class="subbar"><button class="lnk" id="allp">All projects</button><span class="subtabs" role="tablist"><button data-sub="overview" role="tab">Report</button><button data-sub="findings" role="tab">Findings</button></span></div>`); document.querySelectorAll('.subtabs button').forEach(b=>{ if(b.dataset.sub===S.page) b.setAttribute('aria-current','page'); });}
+  if(needs&&S.repo!=null){ $('#app').insertAdjacentHTML('afterbegin',`<div class="subbar"><button class="lnk" id="allp">${ic('back',16)} All projects</button><span class="subtabs" role="tablist"><button data-sub="overview" role="tab">Report</button><button data-sub="findings" role="tab">Findings</button></span></div>`); document.querySelectorAll('.subtabs button').forEach(b=>{ if(b.dataset.sub===S.page) b.setAttribute('aria-current','page'); });}
   document.querySelectorAll('#nav button').forEach(b=>{ const on=b.dataset.go===S.page||(b.dataset.go==='projects'&&needs); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   $('#repo').style.display=(needs&&S.repo!=null)?'':'none';
   if(S.repo!=null){ $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version; }
@@ -1249,6 +1322,7 @@ const rb=$('#repoBtn'), rm=$('#repoMenu');
 function menu(){ rm.innerHTML=DATA.repos.map((r,i)=>`<button data-i="${i}"><span>${esc(r.name)} <span class="m">${esc(r.version)}</span></span><span class="m">${r.rep.findings.length} findings</span></button>`).join(''); rm.querySelectorAll('button').forEach(b=>b.onclick=()=>{S.repo=+b.dataset.i;S.file=null;S.cur=0;S.prim=null;S.v=null;rm.hidden=true;render();}); }
 rb.onclick=e=>{ e.stopPropagation(); menu(); rm.hidden=!rm.hidden; };
 document.addEventListener('click',()=>rm.hidden=true);
+{const m={scan:'scan',projects:'projects',benchmark:'benchmark',selftest:'selftest',how:'how'}; document.querySelectorAll('#nav button').forEach(b=>{ const n=m[b.dataset.go]; if(n&&!b.querySelector('.ic')) b.insertAdjacentHTML('afterbegin',ic(n,19)); });}
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); go(b.dataset.go); }));
 let rz; addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>{ if(S.page==='overview') drawMap(); },120); });
 

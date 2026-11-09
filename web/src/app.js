@@ -68,7 +68,7 @@ function render(){
   const needs=(S.page==='overview'||S.page==='findings'), v=(needs&&S.repo==null)?pick:{overview,findings,benchmark,scan,selftest,how}[S.page];
   $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
-  if(needs&&S.repo!=null){ $('#app').insertAdjacentHTML('afterbegin',`<div class="subbar"><button class="lnk" id="allp">All projects</button><span class="subtabs" role="tablist"><button data-sub="overview" role="tab">Report</button><button data-sub="findings" role="tab">Findings</button></span></div>`); document.querySelectorAll('.subtabs button').forEach(b=>{ if(b.dataset.sub===S.page) b.setAttribute('aria-current','page'); });}
+  if(needs&&S.repo!=null){ $('#app').insertAdjacentHTML('afterbegin',`<div class="subbar"><button class="lnk" id="allp">${ic('back',16)} All projects</button><span class="subtabs" role="tablist"><button data-sub="overview" role="tab">Report</button><button data-sub="findings" role="tab">Findings</button></span></div>`); document.querySelectorAll('.subtabs button').forEach(b=>{ if(b.dataset.sub===S.page) b.setAttribute('aria-current','page'); });}
   document.querySelectorAll('#nav button').forEach(b=>{ const on=b.dataset.go===S.page||(b.dataset.go==='projects'&&needs); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   $('#repo').style.display=(needs&&S.repo!=null)?'':'none';
   if(S.repo!=null){ $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version; }
@@ -198,5 +198,6 @@ const rb=$('#repoBtn'), rm=$('#repoMenu');
 function menu(){ rm.innerHTML=DATA.repos.map((r,i)=>`<button data-i="${i}"><span>${esc(r.name)} <span class="m">${esc(r.version)}</span></span><span class="m">${r.rep.findings.length} findings</span></button>`).join(''); rm.querySelectorAll('button').forEach(b=>b.onclick=()=>{S.repo=+b.dataset.i;S.file=null;S.cur=0;S.prim=null;S.v=null;rm.hidden=true;render();}); }
 rb.onclick=e=>{ e.stopPropagation(); menu(); rm.hidden=!rm.hidden; };
 document.addEventListener('click',()=>rm.hidden=true);
+{const m={scan:'scan',projects:'projects',benchmark:'benchmark',selftest:'selftest',how:'how'}; document.querySelectorAll('#nav button').forEach(b=>{ const n=m[b.dataset.go]; if(n&&!b.querySelector('.ic')) b.insertAdjacentHTML('afterbegin',ic(n,19)); });}
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); go(b.dataset.go); }));
 let rz; addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>{ if(S.page==='overview') drawMap(); },120); });

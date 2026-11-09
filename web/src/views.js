@@ -240,7 +240,7 @@ function findings(){
     return tr;
   }).join('');
   const b=(attr,k,l,on)=>`<button class="tx${on?' on':''}" data-${attr}="${k}">${l}</button>`;
-  return `<div class="hrow"><div><p class="kick m">${esc(r.name)} ${esc(r.version)}</p><h1 class="hl">Labelling sheet</h1></div><div class="exps"><button class="btn ghost" id="expj">JSON</button><button class="btn ghost" id="expc">CBOM</button><button class="btn ghost" id="exps">SARIF</button><button class="btn ghost" id="exp">CSV</button></div></div>
+  return `<div class="hrow"><div><p class="kick m">${esc(r.name)} ${esc(r.version)}</p><h1 class="hl">Labelling sheet</h1></div><div class="exps"><button class="btn ghost" id="expj">${ic('json',16)}JSON</button><button class="btn ghost" id="expc">${ic('cbom',16)}CBOM</button><button class="btn ghost" id="exps">${ic('sarif',16)}SARIF</button><button class="btn ghost" id="exp">${ic('csv',16)}CSV</button></div></div>
     <div class="sum">
       <div><div class="v">${labelled.length}<small> of ${all.length}</small></div><div class="t">labelled</div></div>
       <div><div class="v" style="color:var(--rust)">${real}</div><div class="t">real problems</div></div>
@@ -318,14 +318,14 @@ function scan(){
   if(S.scode==null) S.scode=SAMPLE;
   EXK='land'; if(EXS.land!==1){ EXS.land=1; EXS.t=0; EXS.shown=-1; }
   const lines=S.scode.split('\n').length;
-  return `<section class="land"><h1 class="hl">Today's encryption has an expiry date. Find it in your code.</h1>
+  return `<section class="land"><div><h1 class="hl">Today's encryption has an expiry date. Find it in your code.</h1>
     <p class="land-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
-    <div class="land-a"><button class="cta" id="cta">Check your code</button><button class="lnk" id="seerep">See a report on a real project</button></div></section>
+    <div class="land-a"><button class="cta" id="cta">Check your code ${ic('arrow',18)}</button><button class="lnk" id="seerep">See a report on a real project</button></div></div>${mosaic()}</section>
     ${explainer()}
     <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. Your code goes to the scan service over HTTPS, is scanned in memory and discarded when the scan ends. CryptoRot does not store it, log it or keep a copy. Code you cannot send can be scanned with the offline command-line version.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
-    <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>`;
+    <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>${checks()}`;
 }
 function gutter(n,rp){
   const by={}; if(rp) rp.rep.findings.forEach(x=>{ by[x.line]=x; });
@@ -417,6 +417,21 @@ function how(){
 
 function pick(){
   const cards=DATA.repos.map((r,i)=>{ const c=tally(r), n=flat(r).filter(x=>x.clock!=='benign').length;
-    return `<button class="pk" data-open="${i}"><span class="pk-n">${esc(r.name)}</span><span class="m">${esc(r.version)}, ${r.rep.coverage.files_parsed} files</span><span class="pk-c"><b>${n}</b> finding${n===1?'':'s'}</span><span class="pk-r">${c.now} broken today</span></button>`; }).join('');
+    return `<button class="pk" data-open="${i}"><span class="pk-n">${esc(r.name)}</span><span class="m">${esc(r.version)}, ${r.rep.coverage.files_parsed} files</span><span class="pk-c"><b>${n}</b> finding${n===1?'':'s'}</span><span class="pk-r">${c.now} broken today</span><span class="pk-s" aria-hidden="true">${strip(r)}</span></button>`; }).join('');
   return `<div class="pick"><h1 class="hl">Pick a project</h1><p class="fxn" style="margin:12px 0 28px;max-width:620px">Real open-source Python projects, scanned at a pinned commit. Each opens as a report and a full findings list, with every finding's due year and proof trail.</p><div class="pkg">${cards}</div></div>`;
+}
+
+function checks(){
+  const C=[['hash','Broken hashes','MD5 collides in practice and SHA-1 is being retired. Both still turn up in signatures, checksums and password code.','now','Today and by 2030'],
+   ['blocks','ECB mode','Equal blocks of data encrypt to equal ciphertext, so the shape of the data stays visible.','now','Today'],
+   ['key','Hardcoded keys','A key committed to source is readable by everyone who can read the code.','now','Today'],
+   ['lock','RSA and Diffie-Hellman','They protect traffic that can be recorded now and opened once a large quantum computer exists.','quantum','By 2035'],
+   ['curve','Elliptic curves','Signatures and key agreement on elliptic curves are deprecated in 2030 and disallowed in 2035.','year','By 2030 and 2035'],
+   ['small','Undersized keys','Keys and curves below current minimum sizes are already brute-forceable or disallowed.','now','Today']];
+  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>Six kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c">${ic(i)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
+}
+
+function strip(r){
+  const col={now:'#ce461a',policy:'#966c1e',quantum:'#14161a'}; const xs=flat(r).filter(x=>x.clock!=='benign').slice(0,48);
+  return xs.map(x=>`<i style="background:${col[x.clock]||'#8b8a84'}"></i>`).join('');
 }
