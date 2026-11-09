@@ -17,6 +17,9 @@ KEYS = [k for k in os.environ.get('CR_KEYS', '').split(',') if k]
 LIMIT, WINDOW = int(os.environ.get('CR_RATE', '30')), 3600
 MAX_FILES, MAX_BYTES = 400, 2_000_000
 
+# Privacy: request bodies are never written to disk or logs. Scans run in a temporary
+# directory that is deleted when the request ends. Only the rate limiter keeps an
+# IP address, in memory, for one hour.
 app = FastAPI(title='CryptoRot', docs_url=None, redoc_url=None, openapi_url=None)
 app.add_middleware(CORSMiddleware, allow_origins=ORIGINS or ['http://localhost:8000'],
                    allow_methods=['POST', 'GET'], allow_headers=['content-type', 'x-api-key'])

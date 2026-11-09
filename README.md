@@ -58,6 +58,10 @@ python3 bench/make_data.py && python3 bench/make_reviews.py
 python3 engine/selftest.py
 ```
 
+## Privacy
+
+The hosted scanner receives the source you send, scans it in a temporary directory and deletes it when the request ends. Request bodies are never written to disk or logs. The rate limiter keeps your IP address in memory for one hour. For code that cannot leave your machine, use the command-line version.
+
 ## Limits
 
 - The 33 labels come from a single automated review and have not been checked by a second person. Treat 75% as a starting figure.

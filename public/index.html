@@ -863,7 +863,7 @@ function scan(){
     <p class="land-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
     <div class="land-a"><button class="cta" id="cta">Check your code</button><button class="lnk" id="seerep">See a report on a real project</button></div></section>
     ${explainer()}
-    <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. Your code is sent to the CryptoRot scan service over HTTPS and is not saved.</p></div>
+    <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. Your code goes to the scan service over HTTPS, is scanned in memory and discarded when the scan ends. CryptoRot does not store it, log it or keep a copy. Code you cannot send can be scanned with the offline command-line version.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
     <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>`;
