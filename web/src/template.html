@@ -4,8 +4,14 @@
 <meta charset="utf-8">
 <!-- CryptoRot. Copyright (c) 2026 Rohitkumar V Navalgund. All rights reserved. Proprietary: copying, reuse or redistribution of this page or its data needs written permission. -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CryptoRot: find the weak crypto in your Python code</title>
-<meta name="description" content="CryptoRot reads Python code, finds weak or retiring cryptography, and gives every finding a fix-by year. Exports a CycloneDX CBOM, SARIF, JSON and CSV.">
+<title>CryptoRot: crypto-agility and post-quantum scanner for Python</title>
+<meta name="description" content="Find weak, retiring and quantum-vulnerable cryptography in Python code. Every finding gets a fix-by year. Exports a CycloneDX CBOM, SARIF, JSON and CSV.">
+<meta name="keywords" content="crypto agility, post-quantum cryptography, PQC migration, CBOM, CycloneDX, SARIF, Python static analysis, cryptography scanner, quantum-safe">
+<meta name="author" content="rk">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#14161a">
+<link rel="canonical" href="https://cryptorot.vercel.app/">
+<meta property="og:site_name" content="CryptoRot">
 <meta property="og:type" content="website">
 <meta property="og:title" content="CryptoRot: find the encryption in your code that expires">
 <meta property="og:description" content="Scans Python for weak or retiring cryptography and gives every finding a fix-by year.">
@@ -13,8 +19,12 @@
 <meta property="og:image" content="https://cryptorot.vercel.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CryptoRot: a padlock dissolving into pixels, with the headline Today's encryption has an expiry date.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CryptoRot: find the encryption in your code that expires">
+<meta name="twitter:description" content="Scans Python for weak or retiring cryptography and gives every finding a fix-by year.">
 <meta name="twitter:image" content="https://cryptorot.vercel.app/og.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://cryptorot.vercel.app/#site","url":"https://cryptorot.vercel.app/","name":"CryptoRot","inLanguage":"en"},{"@type":"SoftwareApplication","@id":"https://cryptorot.vercel.app/#app","name":"CryptoRot","url":"https://cryptorot.vercel.app/","applicationCategory":"SecurityApplication","operatingSystem":"Web, Linux, macOS, Windows","description":"Static analyzer for Python that finds weak, retiring and quantum-vulnerable cryptography and gives every finding a fix-by year. Exports a CycloneDX 1.6 CBOM, SARIF 2.1.0, JSON and CSV.","author":{"@type":"Person","name":"rk","url":"https://rk01.tech","sameAs":["https://www.linkedin.com/in/rohitkumarvn"]},"image":"https://cryptorot.vercel.app/og.png","featureList":["Resolves aliased imports, joined strings and values passed through helpers","Dates every finding: broken today, NIST 2030 and 2035 deadlines, quantum exposure","Proof trail for each finding","CycloneDX CBOM, SARIF, JSON and CSV export"]}]}</script>
 <link rel="icon" href="data:image/svg+xml;base64,/*ICON64*/">
 <style>
 /*FONTS*/
@@ -616,6 +626,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </header>
 <div class="tip" id="tip"></div>
+<noscript><div style="max-width:720px;margin:48px auto;padding:0 20px;font:18px/1.5 sans-serif;color:#14161a"><h1>Today's encryption has an expiry date. Find it in your code.</h1><p>CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year. It checks for broken hashes (MD5, SHA-1), ECB mode, hardcoded keys, undersized keys, RSA and Diffie-Hellman, and elliptic curves, and exports a CycloneDX CBOM, SARIF, JSON and CSV.</p><p>This page needs JavaScript to run scans.</p></div></noscript>
 <main class="wrap" id="app"></main>
 <footer class="ft" id="ft"><div class="ps" id="ps" aria-hidden="true"></div>
   <div class="in ft-g"><div class="ft-l"><div class="ft-w" aria-hidden="true">CryptoRot</div></div>
