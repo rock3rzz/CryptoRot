@@ -318,14 +318,18 @@ function scan(){
   if(S.scode==null) S.scode=SAMPLE;
   EXK='land'; if(EXS.land!==1){ EXS.land=1; EXS.t=0; EXS.shown=-1; }
   const lines=S.scode.split('\n').length;
-  return `<section class="land"><div><h1 class="hl">Today's encryption has an expiry date. Find it in your code.</h1>
-    <p class="land-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
-    <div class="land-a"><button class="cta" id="cta">Check your code ${ic('arrow',18)}</button><button class="lnk" id="seerep">See a report on a real project</button></div></div>${mosaic()}</section>
-    ${explainer()}
-    <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. Your code goes to the scan service over HTTPS, is scanned in memory and discarded when the scan ends. CryptoRot does not store it, log it or keep a copy. Code you cannot send can be scanned with the offline command-line version.</p></div>
+  return `<section class="hx"><canvas id="field" aria-hidden="true"></canvas><div class="in hx-in"><h1 class="hx-h">Today's encryption has an <em>expiry date.</em> Find it in your code.</h1>
+    <p class="hx-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
+    <div class="land-a"><button class="cta" data-tool>Check your code ${ic('arrow',20)}</button><button class="lnk" id="seerep">See a report on a real project</button></div></div></section>
+    ${statBand()}
+    <div class="in sec">${explainer()}</div>
+    ${deadlines()}
+    <div class="in sec" id="tool"><div class="wb"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. Your code goes to the scan service over HTTPS, is scanned in memory and discarded when the scan ends. CryptoRot does not store it, log it or keep a copy. Code you cannot send can be scanned with the offline command-line version.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
-    <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>${checks()}`;
+    <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div></div>
+    <div class="in sec">${checks()}</div>
+    ${endBand()}`;
 }
 function gutter(n,rp){
   const by={}; if(rp) rp.rep.findings.forEach(x=>{ by[x.line]=x; });
@@ -363,7 +367,7 @@ function bindScan(){
   t.oninput=()=>{ S.scode=t.value; g.innerHTML=gutter(t.value.split('\n').length,S.scanRes); scanSoon(); };
   t.onscroll=()=>{ g.scrollTop=t.scrollTop; };
   $('#gop').onclick=()=>$('#fld').click();
-  $('#cta').onclick=()=>$('#tool').scrollIntoView({behavior:REDUCE?'auto':'smooth'}); $('#seerep').onclick=()=>go('overview'); bindExplainer();
+  document.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>$('#tool').scrollIntoView({behavior:REDUCE?'auto':'smooth'})); bindField(); $('#seerep').onclick=()=>go('overview'); bindExplainer();
   $('#fld').onchange=e=>doScan({files:Array.from(e.target.files)});
   bindScanOut(); liveScan();
 }
@@ -428,7 +432,7 @@ function checks(){
    ['lock','RSA and Diffie-Hellman','They protect traffic that can be recorded now and opened once a large quantum computer exists.','quantum','By 2035'],
    ['curve','Elliptic curves','Signatures and key agreement on elliptic curves are deprecated in 2030 and disallowed in 2035.','year','By 2030 and 2035'],
    ['small','Undersized keys','Keys and curves below current minimum sizes are already brute-forceable or disallowed.','now','Today']];
-  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>Six kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c">${ic(i)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
+  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>Six kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c c-${w}">${ic(i,48)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
 }
 
 function strip(r){

@@ -20,6 +20,6 @@ _how=dict(code=_code.rstrip('\n'),finding=_rep.analyze(_hw)['findings'][0])
 boot="""(function(){ requestAnimationFrame(exTick);const h=location.hash.slice(1); if(PAGES.includes(h)) S.page=h; render();})();"""
 html=open('web/src/template.html').read()
 for k,v in [('/*API*/',json.dumps(os.environ.get('CR_API','http://localhost:8000'))),('/*FONTS*/',fonts),('/*DATA*/',json.dumps(data,separators=(',',':'))),('/*META*/',json.dumps(adapter.meta())),('/*HOW*/',json.dumps(_how)),
-            ('/*APP*/',open('web/src/app.js').read()),('/*VIEWS*/',open('web/src/icons.js').read()+open('web/src/views.js').read()+open('web/src/motion.js').read()),('/*BOOT*/',boot),('/*LOGO*/',logo),('/*ICON64*/',base64.b64encode(icon.encode()).decode())]:
+            ('/*APP*/',open('web/src/app.js').read()),('/*VIEWS*/',open('web/src/icons.js').read()+open('web/src/field.js').read()+open('web/src/views.js').read()+open('web/src/motion.js').read()),('/*BOOT*/',boot),('/*LOGO*/',logo),('/*ICON64*/',base64.b64encode(open('web/assets/favicon.svg').read().encode()).decode())]:
     html=html.replace(k,v) if k not in ('/*APP*/','/*VIEWS*/','/*BOOT*/') else html.replace(k,(lambda s:s)(v),1)
 os.makedirs('public',exist_ok=True); open('public/index.html','w').write(html); print(len(html)//1024,'KB')

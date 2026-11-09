@@ -66,7 +66,7 @@ function squarify(items,rect){
 const PAGES=['scan','overview','findings','benchmark','selftest','how'];
 function render(){
   const needs=(S.page==='overview'||S.page==='findings'), v=(needs&&S.repo==null)?pick:{overview,findings,benchmark,scan,selftest,how}[S.page];
-  $('#app').innerHTML=v();
+  $('#app').className='wrap'+(S.page==='scan'?' wide':''); $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
   if(needs&&S.repo!=null){ $('#app').insertAdjacentHTML('afterbegin',`<div class="subbar"><button class="lnk" id="allp">${ic('back',16)} All projects</button><span class="subtabs" role="tablist"><button data-sub="overview" role="tab">Report</button><button data-sub="findings" role="tab">Findings</button></span></div>`); document.querySelectorAll('.subtabs button').forEach(b=>{ if(b.dataset.sub===S.page) b.setAttribute('aria-current','page'); });}
   document.querySelectorAll('#nav button').forEach(b=>{ const on=b.dataset.go===S.page||(b.dataset.go==='projects'&&needs); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
