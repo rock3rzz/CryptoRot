@@ -355,6 +355,13 @@ ol.refs li{padding-left:4px}
 }
 
 /* explainer */
+.pkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.pk{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;border:1px solid var(--ink);background:var(--paper);padding:22px 22px 20px;cursor:pointer}
+.pk:hover{background:var(--sunk)}
+.pk-n{font-size:var(--m);font-weight:600;letter-spacing:-.01em}
+.pk-c{margin-top:14px;font-size:var(--s)}
+.pk-c b{font-size:var(--l);font-weight:600;letter-spacing:-.02em;margin-right:4px}
+.pk-r{color:var(--rust);font-weight:500;font-size:var(--s)}
 .land{margin:0 0 48px;padding-top:12px}.land h1.hl{max-width:980px}
 .land-p{margin:22px 0 0;max-width:640px;font-size:var(--m);line-height:1.5;color:var(--ink2)}
 .land-a{display:flex;align-items:center;gap:28px;margin-top:30px;flex-wrap:wrap}
@@ -490,7 +497,7 @@ for(const k in (DATA.reviews||{})) if(!(k in LS)) LS[k]=DATA.reviews[k];
 function saveLS(){ try{ localStorage.setItem('cryptorot_labels',JSON.stringify(LS)); }catch(e){} }
 
 /* ---------- state ---------- */
-const S={page:'scan',repo:5,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
+const S={page:'scan',repo:null,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
          year:CUR,tests:false,fix:{},trail:{},play:null,live:null,_rows:[]};
 
 /* ---------- derived data. The engine's report is never modified. ---------- */
@@ -501,7 +508,7 @@ function prep(r){
   const files=r.files.map(f=>({path:f.path,loc:f.loc,all:byFile[f.path]||[]}));
   return r._p={all,files};
 }
-const repo=()=>{ const r=DATA.repos[S.repo]; return (S.page==='overview'&&r.versions&&S.v!=null)?r.versions[S.v]:r; };
+const repo=()=>{ const r=DATA.repos[S.repo==null?0:S.repo]; return (S.page==='overview'&&r.versions&&S.v!=null)?r.versions[S.v]:r; };
 const inScope=x=>S.tests||x.scope==='source';
 const flat=r=>prep(r).all.filter(inScope);
 const lkey=(r,x)=>r.name+'@'+r.version+'|'+x.file+'|'+x.line+'|'+x.primitive;
@@ -955,6 +962,12 @@ function how(){
    <h2 id="refs">References</h2><ol class="refs">${refs}</ol></article>`;
   return `<div class="docw">${html}<nav class="toc" aria-label="On this page"><p class="kick m">On this page</p>${toc.map(t=>`<button data-sc="${t[0]}">${t[1]}</button>`).join('')}</nav></div>`;
 }
+
+function pick(){
+  const cards=DATA.repos.map((r,i)=>{ const c=tally(r), n=flat(r).filter(x=>x.clock!=='benign').length;
+    return `<button class="pk" data-open="${i}"><span class="pk-n">${esc(r.name)}</span><span class="m">${esc(r.version)}, ${r.rep.coverage.files_parsed} files</span><span class="pk-c"><b>${n}</b> finding${n===1?'':'s'}</span><span class="pk-r">${c.now} broken today</span></button>`; }).join('');
+  return `<div class="pick"><h1 class="hl">Pick a project</h1><p class="fxn" style="margin:12px 0 28px;max-width:620px">Real open-source Python projects, scanned at a pinned commit. Open one to see every finding with its due year and proof trail.</p><div class="pkg">${cards}</div></div>`;
+}
 /* ---------- home page explainer: four scenes drawn from a clock ---------- */
 const EXD=9000;
 const bez=(x1,y1,x2,y2)=>x=>{ if(x<=0) return 0; if(x>=1) return 1; let a=0,b=1,t=x; for(let i=0;i<24;i++){ const cx=3*x1*t*(1-t)*(1-t)+3*x2*t*t*(1-t)+t*t*t; if(cx<x) a=t; else b=t; t=(a+b)/2; } return 3*y1*t*(1-t)*(1-t)+3*y2*t*t*(1-t)+t*t*t; };
@@ -1097,18 +1110,19 @@ function bindExplainer(){
 /* ---------- render + events ---------- */
 const PAGES=['scan','overview','findings','benchmark','selftest','how'];
 function render(){
-  const v={overview,findings,benchmark,scan,selftest,how}[S.page];
+  const needs=(S.page==='overview'||S.page==='findings'), v=(needs&&S.repo==null)?pick:{overview,findings,benchmark,scan,selftest,how}[S.page];
   $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
   document.querySelectorAll('#nav button').forEach(b=>{ if(b.dataset.go===S.page) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
-  $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version;
-  $('#repo').style.visibility=S.page==='scan'?'hidden':'';
-  if(S.page==='overview') drawMap();
+  $('#repo').style.display=(needs&&S.repo!=null)?'':'none';
+  if(S.repo!=null){ $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version; }
+  if(S.page==='overview'&&S.repo!=null) drawMap();
   bind();
 }
 function stopPlay(){ if(S.play){ clearInterval(S.play); S.play=null; } }
 function go(p){ stopPlay(); S.page=p; window.scrollTo(0,0); render(); }
 function bind(){
+  if((S.page==='overview'||S.page==='findings')&&S.repo==null){ document.querySelectorAll('.pk').forEach(b=>b.onclick=()=>{ S.repo=+b.dataset.open; S.file=null; S.cur=0; S.prim=null; S.v=null; render(); window.scrollTo(0,0); }); return; }
   if(S.page==='overview'){
     document.querySelectorAll('.mk').forEach(b=>b.onclick=()=>{ stopPlay(); S.v=+b.dataset.v; render(); });
     const pl=$('#play'); if(pl) pl.onclick=()=>{ if(S.play){ stopPlay(); render(); return; } const n=DATA.repos[S.repo].versions.length; S.v=0; render(); S.play=setInterval(()=>{ if(S.v>=n-1){ stopPlay(); render(); return; } S.v++; render(); },1100); render(); };

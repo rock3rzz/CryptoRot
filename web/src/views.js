@@ -414,3 +414,9 @@ function how(){
    <h2 id="refs">References</h2><ol class="refs">${refs}</ol></article>`;
   return `<div class="docw">${html}<nav class="toc" aria-label="On this page"><p class="kick m">On this page</p>${toc.map(t=>`<button data-sc="${t[0]}">${t[1]}</button>`).join('')}</nav></div>`;
 }
+
+function pick(){
+  const cards=DATA.repos.map((r,i)=>{ const c=tally(r), n=flat(r).filter(x=>x.clock!=='benign').length;
+    return `<button class="pk" data-open="${i}"><span class="pk-n">${esc(r.name)}</span><span class="m">${esc(r.version)}, ${r.rep.coverage.files_parsed} files</span><span class="pk-c"><b>${n}</b> finding${n===1?'':'s'}</span><span class="pk-r">${c.now} broken today</span></button>`; }).join('');
+  return `<div class="pick"><h1 class="hl">Pick a project</h1><p class="fxn" style="margin:12px 0 28px;max-width:620px">Real open-source Python projects, scanned at a pinned commit. Open one to see every finding with its due year and proof trail.</p><div class="pkg">${cards}</div></div>`;
+}

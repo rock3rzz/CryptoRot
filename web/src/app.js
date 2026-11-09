@@ -11,7 +11,7 @@ for(const k in (DATA.reviews||{})) if(!(k in LS)) LS[k]=DATA.reviews[k];
 function saveLS(){ try{ localStorage.setItem('cryptorot_labels',JSON.stringify(LS)); }catch(e){} }
 
 /* ---------- state ---------- */
-const S={page:'scan',repo:5,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
+const S={page:'scan',repo:null,file:null,prim:null,clock:'all',conf:'all',q:'',unl:false,cur:0,v:null,
          year:CUR,tests:false,fix:{},trail:{},play:null,live:null,_rows:[]};
 
 /* ---------- derived data. The engine's report is never modified. ---------- */
@@ -22,7 +22,7 @@ function prep(r){
   const files=r.files.map(f=>({path:f.path,loc:f.loc,all:byFile[f.path]||[]}));
   return r._p={all,files};
 }
-const repo=()=>{ const r=DATA.repos[S.repo]; return (S.page==='overview'&&r.versions&&S.v!=null)?r.versions[S.v]:r; };
+const repo=()=>{ const r=DATA.repos[S.repo==null?0:S.repo]; return (S.page==='overview'&&r.versions&&S.v!=null)?r.versions[S.v]:r; };
 const inScope=x=>S.tests||x.scope==='source';
 const flat=r=>prep(r).all.filter(inScope);
 const lkey=(r,x)=>r.name+'@'+r.version+'|'+x.file+'|'+x.line+'|'+x.primitive;
@@ -65,18 +65,19 @@ function squarify(items,rect){
 /* ---------- render + events ---------- */
 const PAGES=['scan','overview','findings','benchmark','selftest','how'];
 function render(){
-  const v={overview,findings,benchmark,scan,selftest,how}[S.page];
+  const needs=(S.page==='overview'||S.page==='findings'), v=(needs&&S.repo==null)?pick:{overview,findings,benchmark,scan,selftest,how}[S.page];
   $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
   document.querySelectorAll('#nav button').forEach(b=>{ if(b.dataset.go===S.page) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
-  $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version;
-  $('#repo').style.visibility=S.page==='scan'?'hidden':'';
-  if(S.page==='overview') drawMap();
+  $('#repo').style.display=(needs&&S.repo!=null)?'':'none';
+  if(S.repo!=null){ $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version; }
+  if(S.page==='overview'&&S.repo!=null) drawMap();
   bind();
 }
 function stopPlay(){ if(S.play){ clearInterval(S.play); S.play=null; } }
 function go(p){ stopPlay(); S.page=p; window.scrollTo(0,0); render(); }
 function bind(){
+  if((S.page==='overview'||S.page==='findings')&&S.repo==null){ document.querySelectorAll('.pk').forEach(b=>b.onclick=()=>{ S.repo=+b.dataset.open; S.file=null; S.cur=0; S.prim=null; S.v=null; render(); window.scrollTo(0,0); }); return; }
   if(S.page==='overview'){
     document.querySelectorAll('.mk').forEach(b=>b.onclick=()=>{ stopPlay(); S.v=+b.dataset.v; render(); });
     const pl=$('#play'); if(pl) pl.onclick=()=>{ if(S.play){ stopPlay(); render(); return; } const n=DATA.repos[S.repo].versions.length; S.v=0; render(); S.play=setInterval(()=>{ if(S.v>=n-1){ stopPlay(); render(); return; } S.v++; render(); },1100); render(); };
