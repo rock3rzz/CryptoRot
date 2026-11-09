@@ -68,15 +68,17 @@ function render(){
   const needs=(S.page==='overview'||S.page==='findings'), v=(needs&&S.repo==null)?pick:{overview,findings,benchmark,scan,selftest,how}[S.page];
   $('#app').innerHTML=v();
   document.querySelectorAll('#app table').forEach(t=>{ const w=document.createElement('div'); w.className='tw'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
-  document.querySelectorAll('#nav button').forEach(b=>{ if(b.dataset.go===S.page) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  if(needs&&S.repo!=null){ $('#app').insertAdjacentHTML('afterbegin',`<div class="subbar"><button class="lnk" id="allp">All projects</button><span class="subtabs" role="tablist"><button data-sub="overview" role="tab">Report</button><button data-sub="findings" role="tab">Findings</button></span></div>`); document.querySelectorAll('.subtabs button').forEach(b=>{ if(b.dataset.sub===S.page) b.setAttribute('aria-current','page'); });}
+  document.querySelectorAll('#nav button').forEach(b=>{ const on=b.dataset.go===S.page||(b.dataset.go==='projects'&&needs); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   $('#repo').style.display=(needs&&S.repo!=null)?'':'none';
   if(S.repo!=null){ $('#repoName').textContent=repo().name; $('#repoVer').textContent=repo().version; }
   if(S.page==='overview'&&S.repo!=null) drawMap();
   bind();
 }
 function stopPlay(){ if(S.play){ clearInterval(S.play); S.play=null; } }
-function go(p){ stopPlay(); S.page=p; window.scrollTo(0,0); render(); }
+function go(p){ stopPlay(); if(p==='projects') p=S.sub||'overview'; if(p==='overview'||p==='findings') S.sub=p; S.page=p; try{ history.replaceState(null,'','#'+p); }catch(e){} window.scrollTo(0,0); render(); }
 function bind(){
+  const ab=$('#allp'); if(ab){ ab.onclick=()=>{ S.repo=null; S.file=null; S.cur=0; S.prim=null; S.v=null; render(); window.scrollTo(0,0); }; document.querySelectorAll('.subtabs button').forEach(b=>b.onclick=()=>go(b.dataset.sub)); }
   if((S.page==='overview'||S.page==='findings')&&S.repo==null){ document.querySelectorAll('.pk').forEach(b=>b.onclick=()=>{ S.repo=+b.dataset.open; S.file=null; S.cur=0; S.prim=null; S.v=null; render(); window.scrollTo(0,0); }); return; }
   if(S.page==='overview'){
     document.querySelectorAll('.mk').forEach(b=>b.onclick=()=>{ stopPlay(); S.v=+b.dataset.v; render(); });

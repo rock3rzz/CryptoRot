@@ -418,5 +418,5 @@ function how(){
 function pick(){
   const cards=DATA.repos.map((r,i)=>{ const c=tally(r), n=flat(r).filter(x=>x.clock!=='benign').length;
     return `<button class="pk" data-open="${i}"><span class="pk-n">${esc(r.name)}</span><span class="m">${esc(r.version)}, ${r.rep.coverage.files_parsed} files</span><span class="pk-c"><b>${n}</b> finding${n===1?'':'s'}</span><span class="pk-r">${c.now} broken today</span></button>`; }).join('');
-  return `<div class="pick"><h1 class="hl">Pick a project</h1><p class="fxn" style="margin:12px 0 28px;max-width:620px">Real open-source Python projects, scanned at a pinned commit. Open one to see every finding with its due year and proof trail.</p><div class="pkg">${cards}</div></div>`;
+  return `<div class="pick"><h1 class="hl">Pick a project</h1><p class="fxn" style="margin:12px 0 28px;max-width:620px">Real open-source Python projects, scanned at a pinned commit. Each opens as a report and a full findings list, with every finding's due year and proof trail.</p><div class="pkg">${cards}</div></div>`;
 }

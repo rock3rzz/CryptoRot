@@ -1,0 +1,19 @@
+# CryptoRot
+
+> Static analyzer for Python that finds weak or retiring cryptography and gives each finding a fix-by year. Exports a CycloneDX 1.6 CBOM, SARIF 2.1.0, JSON and CSV.
+
+CryptoRot is proprietary software. Copyright (c) 2026 Rohitkumar V Navalgund. All rights reserved. Contact: rohitkumarvn155@gmail.com
+
+## Pages
+
+- Check your code: paste Python or pick a folder and read the findings.
+- Projects: 20 open-source Python projects scanned at pinned commits. Each has a report and a findings list.
+- Benchmark: the method, the numbers and the limits, including the precision on the labelled set.
+- Self-test: 82 mutant programs and 10 controls used to check the scanner.
+- How it works: one finding explained step by step.
+
+## Facts that matter
+
+- Every finding carries a due year and a cited standard, not a score.
+- Findings are labelled proven, probable or heuristic, and as source, test or example code.
+- Labels on the benchmark findings come from a single reviewer and have not been independently checked.
