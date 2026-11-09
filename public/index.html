@@ -360,6 +360,16 @@ textarea#src{flex:1;min-width:0;border:0;background:transparent;resize:none;outl
 .fig figcaption{color:var(--ink3);margin-top:12px;max-width:680px}
 .tl-t{font:400 14px 'Familjen Grotesk',sans-serif;fill:var(--ink3)}
 .tl-l{font:500 16px 'Familjen Grotesk',sans-serif;fill:var(--ink)}
+.fig.dtf{background:var(--ink);padding:32px 28px 26px;margin:32px 0 8px}
+.dtf .tl-l,.dtf .tl-l2{fill:#ece8dc}
+.dtf .tl-t,.dtf .tl-t2{fill:#8a877d}
+.dtf .tl-t.hi,.dtf .tl-t2.hi{fill:#ece8dc}
+.dtf rect[stroke]{stroke:#d9a441;fill:rgba(217,164,65,.14)}
+.dtf .dt-w>rect:last-child{stroke:#ece8dc}
+.dtf figcaption{color:#b3b0a5;max-width:none;margin-top:22px}
+@media (max-width:700px){.fig.dtf{padding:22px 14px 20px;margin-left:-4px;margin-right:-4px}}
+.dt-c{font-family:'Familjen Grotesk',sans-serif;font-weight:600;fill:#fff}
+.tl-t.hi,.tl-t2.hi{fill:var(--ink);font-weight:600}
 .tl-t2{font:400 13px 'Familjen Grotesk',sans-serif;fill:var(--ink3)}
 .tl-l2{font:500 15px 'Familjen Grotesk',sans-serif;fill:var(--ink)}
 .fig svg.dt-n{display:none}
@@ -1195,22 +1205,23 @@ function howLines(code,hot){
   return code.split('\n').map((l,i)=>`<div class="cl2${hot.includes(i+1)?' hot':''}"><span class="m">${i+1}</span><code>${esc(l)||' '}</code></div>`).join('');
 }
 function timeline(){
-  const Y0=CUR, Y1=2036, rows=[
+  const Y0=CUR, N=10, rows=[
     ['MD5','now'],['ECB mode','now'],['Hardcoded key','now'],['Key below 112 bits','now'],['SHA-1','p',2030],['RSA, ECDH, Diffie-Hellman','p',2030],['ECDSA and other signatures','p',2031]];
-  const bar=(x,L,R,y,r)=>{ if(r[1]==='now') return `<rect x="${L}" y="${y}" width="${R-L}" height="18" fill="${COL.due}"/>`; const d=x(r[2]); return `<rect x="${L}" y="${y}" width="${d-L}" height="18" fill="${COL.pend}"/><rect x="${d}" y="${y}" width="${R-d}" height="18" fill="${COL.due}"/>`; };
-  // wide: labels left of the bars
-  const W=880, L=250, R=W-14, x=y=>L+(y-Y0)/(Y1-Y0)*(R-L), rh=34, top=44, H=top+rows.length*rh+14;
-  let w=`<svg class="dt-w" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="When each kind of finding falls due">`;
-  [[2030,'2030'],[2031,'2031'],[2035,'2035']].forEach(([y,t])=>{ const xx=x(y); w+=`<line x1="${xx}" x2="${xx}" y1="${top-8}" y2="${H-8}" stroke="var(--line)"/><text x="${xx}" y="30" text-anchor="middle" class="tl-t">${t}</text>`; });
-  w+=`<text x="${L}" y="30" text-anchor="start" class="tl-t">${Y0}</text>`;
-  rows.forEach((r,i)=>{ const y=top+i*rh; w+=`<text x="0" y="${y+17}" class="tl-l">${r[0]}</text>`+bar(x,L,R,y+4,r); });
-  w+='</svg>';
-  // narrow: label above each bar, full width, larger type
-  const W2=420, L2=4, R2=W2-4, x2=y=>L2+(y-Y0)/(Y1-Y0)*(R2-L2), rh2=54, top2=52, H2=top2+rows.length*rh2;
-  let n=`<svg class="dt-n" viewBox="0 0 ${W2} ${H2}" width="100%" role="img" aria-label="When each kind of finding falls due">`;
-  [[2030,'2030',34],[2031,'2031',14],[2035,'2035',34]].forEach(([y,t,ty])=>{ const xx=x2(y); n+=`<line x1="${xx}" x2="${xx}" y1="${ty+6}" y2="${H2}" stroke="var(--line)"/><text x="${xx}" y="${ty}" text-anchor="middle" class="tl-t2">${t}</text>`; });
-  n+=`<text x="${L2}" y="34" class="tl-t2">${Y0}</text>`;
-  rows.forEach((r,i)=>{ const y=top2+i*rh2; n+=`<text x="${L2}" y="${y+14}" class="tl-l2">${r[0]}</text>`+bar(x2,L2,R2,y+22,r); });
+  const cell=(x,y,w,h,yr,r,fs)=>{ const due=r[1]==='now'||yr>=r[2], first=yr===Y0, mark=(r[1]==='now'&&first)?'now':(r[1]==='p'&&yr===r[2]?String(yr):'');
+    return due?`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${COL.due}"/>`+(mark?`<text x="${x+w/2}" y="${y+h/2+fs*0.36}" text-anchor="middle" class="dt-c" font-size="${fs}">${mark}</text>`:'')
+      :`<rect x="${x+1}" y="${y+1}" width="${w-2}" height="${h-2}" fill="rgba(150,108,30,.14)" stroke="${COL.pend}" stroke-width="2"/>`; };
+  const hd=(yr,x,w,y,cls)=>`<text x="${x+w/2}" y="${y}" text-anchor="middle" class="${cls}${[2030,2031,2035].includes(yr)?' hi':''}">${yr}</text>`;
+  // wide
+  const W=880, L=250, g=4, cw=(W-L)/N, rh=40, top=40, H=top+rows.length*rh;
+  let w=`<svg class="dt-w" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Year by year, when each kind of finding falls due">`;
+  for(let i=0;i<N;i++) w+=hd(Y0+i,L+i*cw,cw-g,26,'tl-t');
+  rows.forEach((r,j)=>{ const y=top+j*rh; w+=`<text x="0" y="${y+20}" class="tl-l">${r[0]}</text>`; for(let i=0;i<N;i++) w+=cell(L+i*cw,y,cw-g,30,Y0+i,r,15); });
+  w+=`<rect x="${L-3}" y="${top-6}" width="${cw+2}" height="${rows.length*rh}" fill="none" stroke="var(--ink)" stroke-width="2"/></svg>`;
+  // narrow
+  const W2=420, L2=2, cw2=(W2-L2*2)/N, rh2=62, top2=34, H2=top2+rows.length*rh2;
+  let n=`<svg class="dt-n" viewBox="0 0 ${W2} ${H2}" width="100%" role="img" aria-label="Year by year, when each kind of finding falls due">`;
+  for(let i=0;i<N;i++) n+=hd(Y0+i,L2+i*cw2,cw2-3,20,'tl-t2').replace(/>(\d\d)(\d\d)</,'>\u2019$2<');
+  rows.forEach((r,j)=>{ const y=top2+j*rh2; n+=`<text x="${L2}" y="${y+14}" class="tl-l2">${r[0]}</text>`; for(let i=0;i<N;i++) n+=cell(L2+i*cw2,y+22,cw2-3,28,Y0+i,r,12); });
   n+='</svg>';
   return w+n;
 }
@@ -1233,7 +1244,7 @@ function how(){
    <div class="ws"><div class="ws-c">${howLines(E.code,hot)}</div><ol class="ws-s">${steps}<li class="ws-v"><span class="m">verdict</span><span>${md(f.status)}</span></li></ol></div>
    <h2 id="dates">A date for every finding</h2>
    <p>MD5 is broken today, SHA-1 has a published end date, and RSA waits on a computer that does not exist yet. A single score would blend 3 different situations, so every finding gets its own date from a cited standard. The calendar slider on the overview answers 1 question: what falls due by a given year.</p>
-   <figure class="fig">${timeline()}<figcaption class="m">Ochre is time left, rust is due. 2030 is when NIST starts deprecating and the federal key-establishment deadline lands, 2031 is the signature deadline, 2035 is when the quantum-vulnerable algorithms are disallowed (NIST IR 8547). The first 4 rows are already due.</figcaption></figure>
+   <figure class="fig dtf">${timeline()}<figcaption class="m">Outlined cells are time left, filled cells are due, and the first column is this year. 2030 is when NIST starts deprecating and the federal key-establishment deadline lands, 2031 is the signature deadline, 2035 is when the quantum-vulnerable algorithms are disallowed (NIST IR 8547). The first 4 rows are already due.</figcaption></figure>
    <h2 id="harvest">Recorded now, forged later</h2>
    <p>An attacker on the network can copy encrypted traffic today and keep it. Traffic protected by RSA or Diffie-Hellman opens once a large quantum computer exists, so the exposure builds from now. A signature can only be forged after the machine arrives. The scanner tells the two apart from what the file does, and when it cannot tell it uses the earlier date and says so.</p>
    <h2 id="blind">What it cannot see</h2>
