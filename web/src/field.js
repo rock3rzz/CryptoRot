@@ -53,8 +53,9 @@ function deadlines(){
   ${flag(2029,6,82,'#1f6353','#fff','2029','Google Cloud targets PQC readiness',330,-60)}
   ${flag(2030,230,82,'#7a5712','#fff','2030','NIST deprecates RSA, EC and SHA-1',350,-90)}
   ${flag(2035,6,82,'#14161a','#f4f1e8','2035','NIST disallows them',250,-30)}
-  </svg></div></section>`;
+  </svg></div>
+  <ol class="tl-m"><li class="a"><b>Today</b><span>MD5, ECB, hardcoded keys</span></li><li class="b"><b>2029</b><span>Google Cloud targets PQC readiness</span></li><li class="c"><b>2030</b><span>NIST deprecates RSA, EC and SHA-1</span></li><li class="d"><b>2035</b><span>NIST disallows them</span></li></ol></section>`;
 }
 function endBand(){
-  return `<section class="band"><div class="in"><h2>Find out what your code owes.</h2><button class="cta" data-tool>Check your code ${ic('arrow',24)}</button></div><div class="in bf">© 2026 Rohitkumar V Navalgund. All rights reserved.</div></section>`;
+  return `<section class="band"><div class="in"><h2>Find out what your code owes.</h2><button class="cta" data-tool>Check your code ${ic('arrow',24)}</button></div><div class="in bf">© 2026 rk. All rights reserved.</div></section>`;
 }
