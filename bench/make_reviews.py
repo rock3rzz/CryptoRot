@@ -11,7 +11,13 @@ R = {('python-rsa','cli.py',79):'r',('python-ecdsa','ecdsa.py',327):'r',('python
  ('pycryptodome','PEM.py',90):'r',('pycryptodome','HPKE.py',183):'r',('itsdangerous','signer.py',45):'r',
  ('certbot','account.py',70):'f',('certbot','ocsp.py',100):'f',('certbot','crypto_util.py',264):'r',('certbot','client.py',199):'r',
  ('certbot','crypto_util.py',274):'r',('django','hashers.py',665):'r',('django','_functions.py',414):'f',
- ('django','_functions.py',460):'f',('django','cached.py',96):'f',('django','crypto.py',49):'r'}
+ ('django','_functions.py',460):'f',('django','cached.py',96):'f',('django','crypto.py',49):'r',
+ ('flask','sessions.py',281):'r',('cryptography','_oid.py',133):'f',('cryptography','_oid.py',134):'f',('cryptography','_oid.py',135):'f',
+ ('cryptography','_oid.py',144):'f',('cryptography','_oid.py',153):'f',('cryptography','ssh.py',1196):'r',('cryptography','extensions.py',72):'f',
+ ('cryptography','rsa.py',170):'r',('cryptography','ec.py',342):'r',('cryptography','ssh.py',495):'r',
+ ('mitmproxy','magisk.py',90):'f',('mitmproxy','htpasswd.py',77):'r',('mitmproxy','certs.py',327):'r',
+ ('botocore','compat.py',162):'f',('botocore','credentials.py',858):'f',('botocore','credentials.py',2310):'f',
+ ('botocore','httpchecksum.py',169):'f',('botocore','utils.py',3420):'f'}
 d = json.load(open('web/data/findings.json'))
 rev, todo = {}, []
 for r in d['repos']:

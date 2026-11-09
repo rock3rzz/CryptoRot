@@ -13,7 +13,7 @@ for n in ('python-rsa', 'python-ecdsa', 'python-jose'):
     r = B + n
     repos.append(adapter.scan_repo(r, n, g(r, 'log', '-1', '--format=%h'), g(r, 'log', '-1', '--format=%ad', '--date=format:%Y-%m')))
 B2 = 'bench/repos/'
-for n in ('pyjwt', 'authlib', 'paramiko', 'pycryptodome', 'pyopenssl', 'pyotp', 'itsdangerous', 'certbot', 'django'):
+for n in [p['name'] for p in json.load(open('bench/pins.json'))][3:]:
     r = B2 + n
     repos.append(adapter.scan_repo(r, n, g(r, 'log', '-1', '--format=%h'), g(r, 'log', '-1', '--format=%ad', '--date=format:%Y-%m')))
 H = 'bench/repos/python-rsa-history'; hist = []

@@ -36,15 +36,17 @@ uvicorn app:app --app-dir server               # run the service
 
 ## Benchmark
 
-Twelve open-source Python projects, pinned by full commit SHA in `bench/pins.json`.
+Twenty open-source Python projects, pinned by full commit SHA in `bench/pins.json`.
 
 | | |
 |---|---|
-| Files scanned | 4,176 |
-| Lines | 833,753 |
-| Findings | 509 |
-| Non-benign findings labelled | 33 |
-| Precision on labelled set | 75% (24 real, 8 false positive, 1 unsure) |
+| Files scanned | 5,604 |
+| Lines | 1,197,921 |
+| Findings | 1,017 |
+| Non-benign findings labelled | 52 |
+| Precision on labelled set | 61% (31 real, 20 false positive, 1 unsure) |
+
+The first twelve projects scored 75%. The eight added later (requests, urllib3, flask, cryptography, mitmproxy, botocore, fabric, pynacl) pulled it down: hash lookup tables, cache keys and protocol-mandated checksums are flagged as weak hashes although they carry no security weight. Those are the next rules to tighten.
 
 <p align="center"><img src="docs/images/06-bench.png" width="49%"> <img src="docs/images/07-selftest.png" width="49%"></p>
 
@@ -64,7 +66,7 @@ The hosted scanner receives the source you send, scans it in a temporary directo
 
 ## Limits
 
-- The 33 labels come from a single automated review and have not been checked by a second person. Treat 75% as a starting figure.
+- The 52 labels come from a single automated review and have not been checked by a second person. Treat 61% as a starting figure.
 - The self-test mutants were written by the project's author and are disclosed as such.
 - Reachability is name-based.
 - Python only, and static analysis cannot see keys or algorithms chosen at runtime.
