@@ -77,3 +77,7 @@ public/   built static site
 ## Contact
 
 Rohitkumar V Navalgund, High Energy Digital. rohitkumarvn155@gmail.com
+
+## License
+
+Copyright (c) 2026 Rohitkumar V Navalgund. All rights reserved. No permission is granted to use, copy, modify or distribute this code without written consent.
