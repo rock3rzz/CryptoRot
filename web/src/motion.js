@@ -1,4 +1,4 @@
-/* ---------- home page explainer: four scenes drawn from a clock ---------- */
+/* ---------- home page explainer: 4 scenes drawn from a clock ---------- */
 const EXD=9000;
 const bez=(x1,y1,x2,y2)=>x=>{ if(x<=0) return 0; if(x>=1) return 1; let a=0,b=1,t=x; for(let i=0;i<24;i++){ const cx=3*x1*t*(1-t)*(1-t)+3*x2*t*t*(1-t)+t*t*t; if(cx<x) a=t; else b=t; t=(a+b)/2; } return 3*y1*t*(1-t)*(1-t)+3*y2*t*t*(1-t)+t*t*t; };
 const eOut=bez(.16,1,.3,1), eIO=bez(.76,0,.24,1);
@@ -7,9 +7,9 @@ const XC={ink:'#14161a',rust:'rgb(206,70,26)',och:'rgb(150,108,30)',verd:'rgb(31
 const T=(x,y,s,cls='ex-l',anchor='start',fill)=>`<text x="${x}" y="${y}" class="${cls}" text-anchor="${anchor}"${fill?` style="fill:${fill}"`:''}>${esc(s)}</text>`;
 const R=(x,y,w,h,fill,extra='')=>`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${Math.max(0,w).toFixed(1)}" height="${h}" fill="${fill}" ${extra}/>`;
 const EXCAP=[
- ['A hash is a fingerprint for data','A hash function turns any file into a short fingerprint. A good one never gives two different files the same print. In 2004 researchers produced the first MD5 collisions, and today two different contracts can carry one MD5 fingerprint and both pass the check.'],
+ ['A hash is a fingerprint for data','A hash function turns any file into a short fingerprint. A good one never gives 2 different files the same print. In 2004 researchers produced the first MD5 collisions, and today 2 different contracts can carry 1 MD5 fingerprint and both pass the check.'],
  ['ECB repeats its own patterns','ECB encrypts every block of data on its own with the same key, so equal blocks become equal ciphertext and the shape of the data stays visible. GCM mixes a counter into every block, which makes the output look random.'],
- ['Encrypted today, opened later','An attacker on the network can copy encrypted traffic as it passes and store it. RSA and Diffie-Hellman keep it locked until a large quantum computer can break them. Data that must stay secret for ten years is exposed to copying that happens now.'],
+ ['Encrypted today, opened later','An attacker on the network can copy encrypted traffic as it passes and store it. RSA and Diffie-Hellman keep it locked until a large quantum computer can break them. Data that must stay secret for 10 years is exposed to copying that happens now.'],
  ['CryptoRot gives every finding a date','The scanner reads your code, follows each name to its real value, and files every finding under today, a standards deadline or the quantum clock. The sections below show what it found in real projects.']];
 function doc(x,y,label,alt){
   const w=[120,134,100,130,90,124,110]; let s=R(x,y,170,200,XC.bone,`stroke="${XC.ink}" stroke-width="2"`);
@@ -31,7 +31,7 @@ function s1(t){
     let ch=''; for(let i=0;i<12;i++){ const tf=4200+i*95; let c=t<tf-110?FB[i]:t<tf?HX[(i*7+Math.floor(t/60))%16]:FA[i]; ch+=c; }
     const same=t>=4200+11*95; o+=hexRow(584,326,ch,same?XC.rust:XC.ink);
     if(same){ const p=eOut(sg(t,5600,6000)); o+=`<text x="415" y="${336}" class="ex-big" text-anchor="middle" fill="${XC.rust}" transform="translate(0 ${(1-p)*8})" opacity="${p}">=</text>`; }
-    if(t>6200){ const p=eOut(sg(t,6200,6700)); o+=T(415,372,'Two different documents, one fingerprint','ex-l','middle',XC.rust).replace('<text','<text opacity="'+p+'"'); }
+    if(t>6200){ const p=eOut(sg(t,6200,6700)); o+=T(415,372,'2 different documents, 1 fingerprint','ex-l','middle',XC.rust).replace('<text','<text opacity="'+p+'"'); }
   }
   return o;
 }
@@ -109,14 +109,14 @@ function s5(t){
   return o;
 }
 const LCAP=[
- ['Encrypted today, opened later','Attackers copy encrypted traffic now and keep it. RSA and Diffie-Hellman protect it only until a large quantum computer can break them, and standards bodies plan for that between 2030 and 2035. Anything that must stay secret for ten years is already exposed.'],
+ ['Encrypted today, opened later','Attackers copy encrypted traffic now and keep it. RSA and Diffie-Hellman protect it only until a large quantum computer can break them, and standards bodies plan for that between 2030 and 2035. Anything that must stay secret for 10 years is already exposed.'],
  ['CryptoRot reads your code','It follows every name to its real value, even one built from pieces like "md" + "5", and lists each weak or retiring algorithm with the line it sits on.'],
  ['You get a dated to-do list','Every finding lands under Today, a 2030 standards deadline, or the quantum clock for 2031 and later. Hand it to your team, your auditor or your tracker.']];
 const SETS={ideas:{sc:[s1,s2,s3,s4],cap:EXCAP,k:true},land:{sc:[s3,s4,s5],cap:LCAP,k:false}};
 let EXK='ideas'; const EXSET=()=>SETS[EXK], EXN=()=>SETS[EXK].sc.length;
 const EXS={t:0,playing:true,last:0,shown:-1};
 function explainer(){
-  return `<section class="ex" aria-label="Four ideas behind every finding"><div class="ex-stage"><svg id="exs" viewBox="0 0 860 390" role="img" aria-label="Animated explanation"></svg></div>
+  return `<section class="ex" aria-label="4 ideas behind every finding"><div class="ex-stage"><svg id="exs" viewBox="0 0 860 390" role="img" aria-label="Animated explanation"></svg></div>
    <div class="ex-side"><p class="kick" id="exk"></p><h3 id="exh"></h3><p id="exp"></p>
    <div class="ex-ctl"><div class="ex-sq">${EXSET().sc.map((_,i)=>`<button data-ex="${i}" aria-label="Scene ${i+1}"></button>`).join('')}</div><button class="lnk" id="explay">Pause</button></div></div></section>`;
 }

@@ -46,7 +46,7 @@ Twenty open-source Python projects, pinned by full commit SHA in `bench/pins.jso
 | Non-benign findings labelled | 52 |
 | Precision on labelled set | 61% (31 real, 20 false positive, 1 unsure) |
 
-The first twelve projects scored 75%. The eight added later (requests, urllib3, flask, cryptography, mitmproxy, botocore, fabric, pynacl) pulled it down: hash lookup tables, cache keys and protocol-mandated checksums are flagged as weak hashes although they carry no security weight. Those are the next rules to tighten.
+The first 12 projects scored 75%. The 8 added later (requests, urllib3, flask, cryptography, mitmproxy, botocore, fabric, pynacl) pulled it down: hash lookup tables, cache keys and protocol-mandated checksums are flagged as weak hashes although they carry no security weight. Those are the next rules to tighten.
 
 <p align="center"><img src="docs/images/06-bench.png" width="49%"> <img src="docs/images/07-selftest.png" width="49%"></p>
 
@@ -62,7 +62,7 @@ python3 engine/selftest.py
 
 ## Privacy
 
-The hosted scanner receives the source you send, scans it in a temporary directory and deletes it when the request ends. Request bodies are never written to disk or logs. The rate limiter keeps your IP address in memory for one hour. For code that cannot leave your machine, use the command-line version.
+The hosted scanner receives the source you send, scans it in a temporary directory and deletes it when the request ends. Request bodies are never written to disk or logs. The rate limiter keeps your IP address in memory for 1 hour. For code that cannot leave your machine, use the command-line version.
 
 ## Limits
 

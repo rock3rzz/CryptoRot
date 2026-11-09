@@ -997,7 +997,7 @@ function overview(){
     <div class="sec-h"><h2>Rot map</h2><div class="legend"><span>Block size is lines of code</span>${legendSvg()}<span>Green clean, ochre time left, rust due</span></div></div>
     ${controls()}
     <div id="map"></div>
-    <div class="sec-h"><h2>Every finding</h2><div class="legend"><span>${unit>1?`One square is up to ${unit} findings`:'One square is one finding'}. Filled is proven, outlined is a guess by name. Click to open the file.</span></div></div>
+    <div class="sec-h"><h2>Every finding</h2><div class="legend"><span>${unit>1?`1 square is up to ${unit} findings`:'1 square is 1 finding'}. Filled is proven, outlined is a guess by name. Click to open the file.</span></div></div>
     <div class="census">${rows}</div>
     <div style="height:56px"></div>
     ${blindHTML(r)}
@@ -1076,13 +1076,13 @@ function selftest(){
   const live=S.live?(S.live.err?`<p class="msg err">Could not run: ${esc(S.live.err)}</p>`:`<p class="msg"><b>Reproduced just now:</b> ${S.live.same} of ${S.live.n} results identical to the table above, ${S.live.ms} ms. ${S.live.s.missed} silent misses, ${S.live.s.false_positives} false positives.</p>`):'';
   const detail=Object.keys(fam).map(k=>`<details class="bsd"><summary><b>${esc(k)}</b><span class="m">${fam[k].n}</span></summary>${rows.filter(r=>r.family===k).map(r=>`<div class="stc"><div class="m">${esc(r.operator)}<span class="stt s-${r.v03}">v0.3 ${r.v03}</span><span class="stt s-${r.v04}">v0.4 ${r.v04}</span></div><pre class="code">${esc(r.code.trim())}</pre>${r.note?`<p class="fxn">${esc(r.note)}</p>`:''}</div>`).join('')}</details>`).join('');
   return `<div class="how"><p class="kick m">Does it work</p><h1 class="hl">We attack our own scanner</h1>
-    <p class="lead">Studies of crypto-misuse detectors found that most misses come from code written slightly differently from the textbook example. So each known misuse below is rewritten the ways real code does it: an aliased import, a name held in a variable, a value passed through a helper. Every rewrite ends in one of three states.</p>
+    <p class="lead">Studies of crypto-misuse detectors found that most misses come from code written slightly differently from the textbook example. So each known misuse below is rewritten the ways real code does it: an aliased import, a name held in a variable, a value passed through a helper. Every rewrite ends in one of 3 states.</p>
     <div class="trio"><div><b style="color:${COL.clean}">Detected</b><p>The scanner reported it.</p></div><div><b style="color:${COL.pend}">Declared</b><p>It could not resolve the code and listed it as a blind spot.</p></div><div><b style="color:${COL.due}">Silently missed</b><p>Nothing reported and nothing declared. This is the failure.</p></div></div>
     <div class="vs">
       <div><p class="kick m">v0.3, the engine from Phase 3</p><div class="big">${s3.missed}<small> of ${s3.mutants} silently missed</small></div><p class="vsn">${s3.detected} detected. ${s3.false_positives} false positive on the safe-code controls.</p></div>
       <div><p class="kick m">v0.4, this version</p><div class="big" style="color:var(--verd)">${s4.missed}<small> of ${s4.mutants} silently missed</small></div><p class="vsn">${s4.detected} detected, ${s4.declared} declared as blind spots. ${s4.false_positives} false positives on ${s4.controls} safe-code controls.</p></div></div>
     <div class="st"><div class="stl m">v0.3</div><div class="stg">${sq('v03')}</div><div class="stl m">v0.4</div><div class="stg">${sq('v04')}</div></div>
-    <p class="fxn" style="margin:12px 0 40px">One square per rewritten misuse. Hover for the code.</p>
+    <p class="fxn" style="margin:12px 0 40px">1 square per rewritten misuse. Hover for the code.</p>
     <table class="rules"><thead><tr><th>Misuse</th><th class="num">Rewrites</th><th class="num">v0.3 detects</th><th class="num">v0.4 detects</th></tr></thead><tbody>${famRows}</tbody></table>
     <div class="live"><button class="btn" id="live" style="margin-left:0">Run it live</button>${live}</div>
     <div class="formula"><p class="kick m">How far to trust this number</p><p>We wrote these rewrites ourselves, which makes this a regression suite. The independent measure is the benchmark on real projects. The suite shows that the holes we thought of are closed and that the scanner reports what it cannot resolve. Other holes may exist. The list is plain code in the repository, so anyone can add rewrites and rerun it.</p></div>
@@ -1201,24 +1201,24 @@ function how(){
     ['Files it cannot read','Python 2 syntax and broken files, each listed by name.']].map(b=>`<div class="bl"><b>${b[0]}</b><p>${md(b[1])}</p></div>`).join('');
   const refs=Object.keys(META.sources).map((k,i)=>`<li>${META.sources[k].url?`<a href="${esc(META.sources[k].url)}" target="_blank" rel="noopener">${esc(META.sources[k].title)}</a>`:esc(META.sources[k].title)}</li>`).join('');
   const st=DATA.selftest.summary04, nrep=DATA.repos.filter(r=>!r.rep.coverage.synthetic).length;
-  const toc=[['one-finding','One finding, start to finish'],['dates','A date for every finding'],['harvest','Recorded now, forged later'],['blind','What it cannot see'],['proof','How we know it works'],['refs','References']];
+  const toc=[['one-finding','1 finding, start to finish'],['dates','A date for every finding'],['harvest','Recorded now, forged later'],['blind','What it cannot see'],['proof','How we know it works'],['refs','References']];
   const html=`<article class="doc"><p class="kick m">How it works</p>
    <h1 class="hl">It reads your code the way a person would, then shows its working.</h1>
    <p class="lead">A grep for “md5” finds the easy cases and misses the rest. CryptoRot parses the code into a tree and follows each name to its value. It records every step on the way, so each finding comes with a proof you can read and argue with.</p>
-   <h2 id="one-finding">One finding, start to finish</h2>
-   <p>The code below builds the hash name from two strings and calls it through an aliased import, so the word <code>md5</code> never appears in a call. Pick a step to see the line it rests on.</p>
+   <h2 id="one-finding">1 finding, start to finish</h2>
+   <p>The code below builds the hash name from 2 strings and calls it through an aliased import, so the word <code>md5</code> never appears in a call. Pick a step to see the line it rests on.</p>
    <div class="ws"><div class="ws-c">${howLines(E.code,hot)}</div><ol class="ws-s">${steps}<li class="ws-v"><span class="m">verdict</span><span>${md(f.status)}</span></li></ol></div>
    <h2 id="dates">A date for every finding</h2>
-   <p>MD5 is broken today, SHA-1 has a published end date, and RSA waits on a computer that does not exist yet. A single score would blend three different situations, so every finding gets its own date from a cited standard. The calendar slider on the overview answers one question: what falls due by a given year.</p>
-   <figure class="fig">${timeline()}<figcaption class="m">Ochre is time left, rust is due. 2030 is when NIST starts deprecating and the federal key-establishment deadline lands, 2031 is the signature deadline, 2035 is when the quantum-vulnerable algorithms are disallowed (NIST IR 8547). The first four rows are already due.</figcaption></figure>
+   <p>MD5 is broken today, SHA-1 has a published end date, and RSA waits on a computer that does not exist yet. A single score would blend 3 different situations, so every finding gets its own date from a cited standard. The calendar slider on the overview answers 1 question: what falls due by a given year.</p>
+   <figure class="fig">${timeline()}<figcaption class="m">Ochre is time left, rust is due. 2030 is when NIST starts deprecating and the federal key-establishment deadline lands, 2031 is the signature deadline, 2035 is when the quantum-vulnerable algorithms are disallowed (NIST IR 8547). The first 4 rows are already due.</figcaption></figure>
    <h2 id="harvest">Recorded now, forged later</h2>
    <p>An attacker on the network can copy encrypted traffic today and keep it. Traffic protected by RSA or Diffie-Hellman opens once a large quantum computer exists, so the exposure builds from now. A signature can only be forged after the machine arrives. The scanner tells the two apart from what the file does, and when it cannot tell it uses the earlier date and says so.</p>
    <h2 id="blind">What it cannot see</h2>
    <p>It reads Python and works statically. Where it cannot resolve something, it lists the place instead of reporting the code as clean.</p>
    <div class="bls">${blind}</div>
-   <p>Two limits remain: the scanner infers whether a file signs or encrypts from its identifiers, and reachability is a name match, so “no caller found” means the code may be dead.</p>
+   <p>2 limits remain: the scanner infers whether a file signs or encrypts from its identifiers, and reachability is a name match, so “no caller found” means the code may be dead.</p>
    <h2 id="proof">How we know it works</h2>
-   <p>We rewrote ${st.mutants} known misuses the ways real code writes them. The previous engine missed 55 without a word. This one misses ${st.missed}, detects ${st.detected}, and lists the other ${st.declared}. Twelve real projects are scanned and reviewed on the <a href="#benchmark" data-go="benchmark">Benchmark</a> page. We wrote the rewrites ourselves, so the first number is a regression test and the benchmark is the real measure.</p>
+   <p>We rewrote ${st.mutants} known misuses the ways real code writes them. The previous engine missed 55 without a word. This one misses ${st.missed}, detects ${st.detected}, and lists the other ${st.declared}. 12 real projects are scanned and reviewed on the <a href="#benchmark" data-go="benchmark">Benchmark</a> page. We wrote the rewrites ourselves, so the first number is a regression test and the benchmark is the real measure.</p>
    <h2 id="refs">References</h2><ol class="refs">${refs}</ol></article>`;
   return `<div class="docw">${html}<nav class="toc" aria-label="On this page"><p class="kick m">On this page</p>${toc.map(t=>`<button data-sc="${t[0]}">${t[1]}</button>`).join('')}</nav></div>`;
 }
@@ -1236,14 +1236,14 @@ function checks(){
    ['lock','RSA and Diffie-Hellman','They protect traffic that can be recorded now and opened once a large quantum computer exists.','quantum','By 2035'],
    ['curve','Elliptic curves','Signatures and key agreement on elliptic curves are deprecated in 2030 and disallowed in 2035.','year','By 2030 and 2035'],
    ['small','Undersized keys','Keys and curves below current minimum sizes are already brute-forceable or disallowed.','now','Today']];
-  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>Six kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c c-${w}">${ic(i,48)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
+  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>6 kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c c-${w}">${ic(i,48)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
 }
 
 function strip(r){
   const col={now:'#ce461a',policy:'#966c1e',quantum:'#14161a'}; const xs=flat(r).filter(x=>x.clock!=='benign').slice(0,48);
   return xs.map(x=>`<i style="background:${col[x.clock]||'#8b8a84'}"></i>`).join('');
 }
-/* ---------- home page explainer: four scenes drawn from a clock ---------- */
+/* ---------- home page explainer: 4 scenes drawn from a clock ---------- */
 const EXD=9000;
 const bez=(x1,y1,x2,y2)=>x=>{ if(x<=0) return 0; if(x>=1) return 1; let a=0,b=1,t=x; for(let i=0;i<24;i++){ const cx=3*x1*t*(1-t)*(1-t)+3*x2*t*t*(1-t)+t*t*t; if(cx<x) a=t; else b=t; t=(a+b)/2; } return 3*y1*t*(1-t)*(1-t)+3*y2*t*t*(1-t)+t*t*t; };
 const eOut=bez(.16,1,.3,1), eIO=bez(.76,0,.24,1);
@@ -1252,9 +1252,9 @@ const XC={ink:'#14161a',rust:'rgb(206,70,26)',och:'rgb(150,108,30)',verd:'rgb(31
 const T=(x,y,s,cls='ex-l',anchor='start',fill)=>`<text x="${x}" y="${y}" class="${cls}" text-anchor="${anchor}"${fill?` style="fill:${fill}"`:''}>${esc(s)}</text>`;
 const R=(x,y,w,h,fill,extra='')=>`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${Math.max(0,w).toFixed(1)}" height="${h}" fill="${fill}" ${extra}/>`;
 const EXCAP=[
- ['A hash is a fingerprint for data','A hash function turns any file into a short fingerprint. A good one never gives two different files the same print. In 2004 researchers produced the first MD5 collisions, and today two different contracts can carry one MD5 fingerprint and both pass the check.'],
+ ['A hash is a fingerprint for data','A hash function turns any file into a short fingerprint. A good one never gives 2 different files the same print. In 2004 researchers produced the first MD5 collisions, and today 2 different contracts can carry 1 MD5 fingerprint and both pass the check.'],
  ['ECB repeats its own patterns','ECB encrypts every block of data on its own with the same key, so equal blocks become equal ciphertext and the shape of the data stays visible. GCM mixes a counter into every block, which makes the output look random.'],
- ['Encrypted today, opened later','An attacker on the network can copy encrypted traffic as it passes and store it. RSA and Diffie-Hellman keep it locked until a large quantum computer can break them. Data that must stay secret for ten years is exposed to copying that happens now.'],
+ ['Encrypted today, opened later','An attacker on the network can copy encrypted traffic as it passes and store it. RSA and Diffie-Hellman keep it locked until a large quantum computer can break them. Data that must stay secret for 10 years is exposed to copying that happens now.'],
  ['CryptoRot gives every finding a date','The scanner reads your code, follows each name to its real value, and files every finding under today, a standards deadline or the quantum clock. The sections below show what it found in real projects.']];
 function doc(x,y,label,alt){
   const w=[120,134,100,130,90,124,110]; let s=R(x,y,170,200,XC.bone,`stroke="${XC.ink}" stroke-width="2"`);
@@ -1276,7 +1276,7 @@ function s1(t){
     let ch=''; for(let i=0;i<12;i++){ const tf=4200+i*95; let c=t<tf-110?FB[i]:t<tf?HX[(i*7+Math.floor(t/60))%16]:FA[i]; ch+=c; }
     const same=t>=4200+11*95; o+=hexRow(584,326,ch,same?XC.rust:XC.ink);
     if(same){ const p=eOut(sg(t,5600,6000)); o+=`<text x="415" y="${336}" class="ex-big" text-anchor="middle" fill="${XC.rust}" transform="translate(0 ${(1-p)*8})" opacity="${p}">=</text>`; }
-    if(t>6200){ const p=eOut(sg(t,6200,6700)); o+=T(415,372,'Two different documents, one fingerprint','ex-l','middle',XC.rust).replace('<text','<text opacity="'+p+'"'); }
+    if(t>6200){ const p=eOut(sg(t,6200,6700)); o+=T(415,372,'2 different documents, 1 fingerprint','ex-l','middle',XC.rust).replace('<text','<text opacity="'+p+'"'); }
   }
   return o;
 }
@@ -1354,14 +1354,14 @@ function s5(t){
   return o;
 }
 const LCAP=[
- ['Encrypted today, opened later','Attackers copy encrypted traffic now and keep it. RSA and Diffie-Hellman protect it only until a large quantum computer can break them, and standards bodies plan for that between 2030 and 2035. Anything that must stay secret for ten years is already exposed.'],
+ ['Encrypted today, opened later','Attackers copy encrypted traffic now and keep it. RSA and Diffie-Hellman protect it only until a large quantum computer can break them, and standards bodies plan for that between 2030 and 2035. Anything that must stay secret for 10 years is already exposed.'],
  ['CryptoRot reads your code','It follows every name to its real value, even one built from pieces like "md" + "5", and lists each weak or retiring algorithm with the line it sits on.'],
  ['You get a dated to-do list','Every finding lands under Today, a 2030 standards deadline, or the quantum clock for 2031 and later. Hand it to your team, your auditor or your tracker.']];
 const SETS={ideas:{sc:[s1,s2,s3,s4],cap:EXCAP,k:true},land:{sc:[s3,s4,s5],cap:LCAP,k:false}};
 let EXK='ideas'; const EXSET=()=>SETS[EXK], EXN=()=>SETS[EXK].sc.length;
 const EXS={t:0,playing:true,last:0,shown:-1};
 function explainer(){
-  return `<section class="ex" aria-label="Four ideas behind every finding"><div class="ex-stage"><svg id="exs" viewBox="0 0 860 390" role="img" aria-label="Animated explanation"></svg></div>
+  return `<section class="ex" aria-label="4 ideas behind every finding"><div class="ex-stage"><svg id="exs" viewBox="0 0 860 390" role="img" aria-label="Animated explanation"></svg></div>
    <div class="ex-side"><p class="kick" id="exk"></p><h3 id="exh"></h3><p id="exp"></p>
    <div class="ex-ctl"><div class="ex-sq">${EXSET().sc.map((_,i)=>`<button data-ex="${i}" aria-label="Scene ${i+1}"></button>`).join('')}</div><button class="lnk" id="explay">Pause</button></div></div></section>`;
 }

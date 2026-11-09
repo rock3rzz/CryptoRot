@@ -193,7 +193,7 @@ function overview(){
     <div class="sec-h"><h2>Rot map</h2><div class="legend"><span>Block size is lines of code</span>${legendSvg()}<span>Green clean, ochre time left, rust due</span></div></div>
     ${controls()}
     <div id="map"></div>
-    <div class="sec-h"><h2>Every finding</h2><div class="legend"><span>${unit>1?`One square is up to ${unit} findings`:'One square is one finding'}. Filled is proven, outlined is a guess by name. Click to open the file.</span></div></div>
+    <div class="sec-h"><h2>Every finding</h2><div class="legend"><span>${unit>1?`1 square is up to ${unit} findings`:'1 square is 1 finding'}. Filled is proven, outlined is a guess by name. Click to open the file.</span></div></div>
     <div class="census">${rows}</div>
     <div style="height:56px"></div>
     ${blindHTML(r)}
@@ -272,13 +272,13 @@ function selftest(){
   const live=S.live?(S.live.err?`<p class="msg err">Could not run: ${esc(S.live.err)}</p>`:`<p class="msg"><b>Reproduced just now:</b> ${S.live.same} of ${S.live.n} results identical to the table above, ${S.live.ms} ms. ${S.live.s.missed} silent misses, ${S.live.s.false_positives} false positives.</p>`):'';
   const detail=Object.keys(fam).map(k=>`<details class="bsd"><summary><b>${esc(k)}</b><span class="m">${fam[k].n}</span></summary>${rows.filter(r=>r.family===k).map(r=>`<div class="stc"><div class="m">${esc(r.operator)}<span class="stt s-${r.v03}">v0.3 ${r.v03}</span><span class="stt s-${r.v04}">v0.4 ${r.v04}</span></div><pre class="code">${esc(r.code.trim())}</pre>${r.note?`<p class="fxn">${esc(r.note)}</p>`:''}</div>`).join('')}</details>`).join('');
   return `<div class="how"><p class="kick m">Does it work</p><h1 class="hl">We attack our own scanner</h1>
-    <p class="lead">Studies of crypto-misuse detectors found that most misses come from code written slightly differently from the textbook example. So each known misuse below is rewritten the ways real code does it: an aliased import, a name held in a variable, a value passed through a helper. Every rewrite ends in one of three states.</p>
+    <p class="lead">Studies of crypto-misuse detectors found that most misses come from code written slightly differently from the textbook example. So each known misuse below is rewritten the ways real code does it: an aliased import, a name held in a variable, a value passed through a helper. Every rewrite ends in one of 3 states.</p>
     <div class="trio"><div><b style="color:${COL.clean}">Detected</b><p>The scanner reported it.</p></div><div><b style="color:${COL.pend}">Declared</b><p>It could not resolve the code and listed it as a blind spot.</p></div><div><b style="color:${COL.due}">Silently missed</b><p>Nothing reported and nothing declared. This is the failure.</p></div></div>
     <div class="vs">
       <div><p class="kick m">v0.3, the engine from Phase 3</p><div class="big">${s3.missed}<small> of ${s3.mutants} silently missed</small></div><p class="vsn">${s3.detected} detected. ${s3.false_positives} false positive on the safe-code controls.</p></div>
       <div><p class="kick m">v0.4, this version</p><div class="big" style="color:var(--verd)">${s4.missed}<small> of ${s4.mutants} silently missed</small></div><p class="vsn">${s4.detected} detected, ${s4.declared} declared as blind spots. ${s4.false_positives} false positives on ${s4.controls} safe-code controls.</p></div></div>
     <div class="st"><div class="stl m">v0.3</div><div class="stg">${sq('v03')}</div><div class="stl m">v0.4</div><div class="stg">${sq('v04')}</div></div>
-    <p class="fxn" style="margin:12px 0 40px">One square per rewritten misuse. Hover for the code.</p>
+    <p class="fxn" style="margin:12px 0 40px">1 square per rewritten misuse. Hover for the code.</p>
     <table class="rules"><thead><tr><th>Misuse</th><th class="num">Rewrites</th><th class="num">v0.3 detects</th><th class="num">v0.4 detects</th></tr></thead><tbody>${famRows}</tbody></table>
     <div class="live"><button class="btn" id="live" style="margin-left:0">Run it live</button>${live}</div>
     <div class="formula"><p class="kick m">How far to trust this number</p><p>We wrote these rewrites ourselves, which makes this a regression suite. The independent measure is the benchmark on real projects. The suite shows that the holes we thought of are closed and that the scanner reports what it cannot resolve. Other holes may exist. The list is plain code in the repository, so anyone can add rewrites and rerun it.</p></div>
@@ -397,24 +397,24 @@ function how(){
     ['Files it cannot read','Python 2 syntax and broken files, each listed by name.']].map(b=>`<div class="bl"><b>${b[0]}</b><p>${md(b[1])}</p></div>`).join('');
   const refs=Object.keys(META.sources).map((k,i)=>`<li>${META.sources[k].url?`<a href="${esc(META.sources[k].url)}" target="_blank" rel="noopener">${esc(META.sources[k].title)}</a>`:esc(META.sources[k].title)}</li>`).join('');
   const st=DATA.selftest.summary04, nrep=DATA.repos.filter(r=>!r.rep.coverage.synthetic).length;
-  const toc=[['one-finding','One finding, start to finish'],['dates','A date for every finding'],['harvest','Recorded now, forged later'],['blind','What it cannot see'],['proof','How we know it works'],['refs','References']];
+  const toc=[['one-finding','1 finding, start to finish'],['dates','A date for every finding'],['harvest','Recorded now, forged later'],['blind','What it cannot see'],['proof','How we know it works'],['refs','References']];
   const html=`<article class="doc"><p class="kick m">How it works</p>
    <h1 class="hl">It reads your code the way a person would, then shows its working.</h1>
    <p class="lead">A grep for “md5” finds the easy cases and misses the rest. CryptoRot parses the code into a tree and follows each name to its value. It records every step on the way, so each finding comes with a proof you can read and argue with.</p>
-   <h2 id="one-finding">One finding, start to finish</h2>
-   <p>The code below builds the hash name from two strings and calls it through an aliased import, so the word <code>md5</code> never appears in a call. Pick a step to see the line it rests on.</p>
+   <h2 id="one-finding">1 finding, start to finish</h2>
+   <p>The code below builds the hash name from 2 strings and calls it through an aliased import, so the word <code>md5</code> never appears in a call. Pick a step to see the line it rests on.</p>
    <div class="ws"><div class="ws-c">${howLines(E.code,hot)}</div><ol class="ws-s">${steps}<li class="ws-v"><span class="m">verdict</span><span>${md(f.status)}</span></li></ol></div>
    <h2 id="dates">A date for every finding</h2>
-   <p>MD5 is broken today, SHA-1 has a published end date, and RSA waits on a computer that does not exist yet. A single score would blend three different situations, so every finding gets its own date from a cited standard. The calendar slider on the overview answers one question: what falls due by a given year.</p>
-   <figure class="fig">${timeline()}<figcaption class="m">Ochre is time left, rust is due. 2030 is when NIST starts deprecating and the federal key-establishment deadline lands, 2031 is the signature deadline, 2035 is when the quantum-vulnerable algorithms are disallowed (NIST IR 8547). The first four rows are already due.</figcaption></figure>
+   <p>MD5 is broken today, SHA-1 has a published end date, and RSA waits on a computer that does not exist yet. A single score would blend 3 different situations, so every finding gets its own date from a cited standard. The calendar slider on the overview answers 1 question: what falls due by a given year.</p>
+   <figure class="fig">${timeline()}<figcaption class="m">Ochre is time left, rust is due. 2030 is when NIST starts deprecating and the federal key-establishment deadline lands, 2031 is the signature deadline, 2035 is when the quantum-vulnerable algorithms are disallowed (NIST IR 8547). The first 4 rows are already due.</figcaption></figure>
    <h2 id="harvest">Recorded now, forged later</h2>
    <p>An attacker on the network can copy encrypted traffic today and keep it. Traffic protected by RSA or Diffie-Hellman opens once a large quantum computer exists, so the exposure builds from now. A signature can only be forged after the machine arrives. The scanner tells the two apart from what the file does, and when it cannot tell it uses the earlier date and says so.</p>
    <h2 id="blind">What it cannot see</h2>
    <p>It reads Python and works statically. Where it cannot resolve something, it lists the place instead of reporting the code as clean.</p>
    <div class="bls">${blind}</div>
-   <p>Two limits remain: the scanner infers whether a file signs or encrypts from its identifiers, and reachability is a name match, so “no caller found” means the code may be dead.</p>
+   <p>2 limits remain: the scanner infers whether a file signs or encrypts from its identifiers, and reachability is a name match, so “no caller found” means the code may be dead.</p>
    <h2 id="proof">How we know it works</h2>
-   <p>We rewrote ${st.mutants} known misuses the ways real code writes them. The previous engine missed 55 without a word. This one misses ${st.missed}, detects ${st.detected}, and lists the other ${st.declared}. Twelve real projects are scanned and reviewed on the <a href="#benchmark" data-go="benchmark">Benchmark</a> page. We wrote the rewrites ourselves, so the first number is a regression test and the benchmark is the real measure.</p>
+   <p>We rewrote ${st.mutants} known misuses the ways real code writes them. The previous engine missed 55 without a word. This one misses ${st.missed}, detects ${st.detected}, and lists the other ${st.declared}. 12 real projects are scanned and reviewed on the <a href="#benchmark" data-go="benchmark">Benchmark</a> page. We wrote the rewrites ourselves, so the first number is a regression test and the benchmark is the real measure.</p>
    <h2 id="refs">References</h2><ol class="refs">${refs}</ol></article>`;
   return `<div class="docw">${html}<nav class="toc" aria-label="On this page"><p class="kick m">On this page</p>${toc.map(t=>`<button data-sc="${t[0]}">${t[1]}</button>`).join('')}</nav></div>`;
 }
@@ -432,7 +432,7 @@ function checks(){
    ['lock','RSA and Diffie-Hellman','They protect traffic that can be recorded now and opened once a large quantum computer exists.','quantum','By 2035'],
    ['curve','Elliptic curves','Signatures and key agreement on elliptic curves are deprecated in 2030 and disallowed in 2035.','year','By 2030 and 2035'],
    ['small','Undersized keys','Keys and curves below current minimum sizes are already brute-forceable or disallowed.','now','Today']];
-  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>Six kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c c-${w}">${ic(i,48)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
+  return `<section class="chk"><h2>What CryptoRot looks for</h2><p>6 kinds of problem, each filed under the date it has to be fixed by.</p><div class="chk-g">${C.map(([i,t,d,w,l])=>`<article class="chk-c c-${w}">${ic(i,48)}<h3>${t}</h3><p>${d}</p><span class="when">${ic(w)}${l}</span></article>`).join('')}</div></section>`;
 }
 
 function strip(r){
