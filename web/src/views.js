@@ -318,7 +318,7 @@ function scan(){
   if(S.scode==null) S.scode=SAMPLE;
   EXK='land'; if(EXS.land!==1){ EXS.land=1; EXS.t=0; EXS.shown=-1; }
   const lines=S.scode.split('\n').length;
-  return `<section class="hx"><canvas id="field" aria-hidden="true"></canvas><div class="in hx-in"><h1 class="hx-h">Today's encryption has an <em>expiry date.</em> Find it in your code.</h1>
+  return `<section class="hx"><canvas id="field" aria-hidden="true"></canvas><div class="in hx-in"><h1 class="hx-h"><span class="nb">Today's encryption</span><span class="nb">has an <em>expiry date.</em></span> <span class="nb">Find it in your code.</span></h1>
     <p class="hx-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
     <div class="land-a"><button class="cta" data-tool>Check your code ${ic('arrow',20)}</button><button class="lnk" id="seerep">See a report on a real project</button></div></div></section>
     ${statBand()}
