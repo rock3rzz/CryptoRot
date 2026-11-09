@@ -1,0 +1,62 @@
+[
+  {
+    "name": "python-rsa",
+    "url": "https://github.com/sybrenstuvel/python-rsa",
+    "commit": "42b0e14ffbeeb9d99d1037e6440a2cc61780e4ea"
+  },
+  {
+    "name": "python-ecdsa",
+    "url": "https://github.com/tlsfuzzer/python-ecdsa",
+    "commit": "71e3fc7240cf31584fb0e10bd58e2830f2fc5afc"
+  },
+  {
+    "name": "python-jose",
+    "url": "https://github.com/mpdavis/python-jose",
+    "commit": "018b310ddb8b50dcfd09a0c152117835a21dd656"
+  },
+  {
+    "name": "pyjwt",
+    "url": "https://github.com/jpadilla/pyjwt",
+    "commit": "16231abfd1d8eab4953e8779b3017b859c88565e"
+  },
+  {
+    "name": "authlib",
+    "url": "https://github.com/lepture/authlib",
+    "commit": "0f9826c51ea2066f351f48a70dd0752d62b470a0"
+  },
+  {
+    "name": "paramiko",
+    "url": "https://github.com/paramiko/paramiko",
+    "commit": "0e9ccb91e0f9a68f2587233d523ad7fe46e730fe"
+  },
+  {
+    "name": "pycryptodome",
+    "url": "https://github.com/Legrandin/pycryptodome",
+    "commit": "bae38d8d881d1610309217e0a1661098aa1af858"
+  },
+  {
+    "name": "pyopenssl",
+    "url": "https://github.com/pyca/pyopenssl",
+    "commit": "1487da3773b0db3977353c9e379ad74124002c43"
+  },
+  {
+    "name": "pyotp",
+    "url": "https://github.com/pyauth/pyotp",
+    "commit": "cc156832fa9f3d5af7fb9e4e6b86b29dfc5b69f1"
+  },
+  {
+    "name": "itsdangerous",
+    "url": "https://github.com/pallets/itsdangerous",
+    "commit": "672971d66a2ef9f85151e53283113f33d642dabd"
+  },
+  {
+    "name": "certbot",
+    "url": "https://github.com/certbot/certbot",
+    "commit": "138defe9c7c68ceb29a66cbd5f3a346567139211"
+  },
+  {
+    "name": "django",
+    "url": "https://github.com/django/django",
+    "commit": "a1f2b45ce5a327f42437bdb620a817839d0bd067"
+  }
+]
