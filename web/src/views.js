@@ -172,6 +172,7 @@ function blindHTML(r){
     <p class="bsn">These places are unresolved. A quiet scan would report them as clean, so CryptoRot lists each one.</p>${body}`;
 }
 function overview(){
+  EXK='ideas'; EXS.t=0; EXS.shown=-1;
   const r=repo(), P=prep(r), all=flat(r), c=tally(r), cov=r.rep.coverage, N=all.length;
   const files=P.files.map(f=>({f,i:fileInfo(f,S.year)}));
   const worst=files.slice().sort((a,b)=>(b.i.due-a.i.due)||(b.i.pend-a.i.pend))[0];
@@ -218,7 +219,7 @@ function inspector(){
   if(!fi.n) big='Clean'; else if(xs.some(x=>x.clock==='now')) big='Today'; else big=String(Math.min(...xs.filter(x=>x.clock!=='benign').map(x=>x.due))||'');
   if(!big) big='Clean';
   return `<div class="path m">${esc(dir)}</div><h3>${esc(base)}</h3>
-    <div class="hero">${numeral(big,col,fi.bite)}<div class="lab">${big==='Clean'?'nothing to fix':'earliest deadline'}<br>${fi.n} finding${fi.n===1?'':'s'}<br>${f.loc} lines</div></div>${groups||'<div class="empty">No weak cryptography found in this file.</div>'}`;
+    <div class="land">${numeral(big,col,fi.bite)}<div class="lab">${big==='Clean'?'nothing to fix':'earliest deadline'}<br>${fi.n} finding${fi.n===1?'':'s'}<br>${f.loc} lines</div></div>${groups||'<div class="empty">No weak cryptography found in this file.</div>'}`;
 }
 
 /* ---------- findings sheet ---------- */
@@ -315,8 +316,13 @@ def seal(data):
 `;
 function scan(){
   if(S.scode==null) S.scode=SAMPLE;
+  EXK='land'; if(EXS.land!==1){ EXS.land=1; EXS.t=0; EXS.shown=-1; }
   const lines=S.scode.split('\n').length;
-  return `<div class="wb"><div class="wb-h"><div><h1 class="hl">Check your own code</h1><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. The scan runs in your browser and nothing is uploaded.</p></div>
+  return `<section class="land"><h1 class="hl">Today's encryption has an expiry date. Find it in your code.</h1>
+    <p class="land-p">CryptoRot reads your Python, finds every weak or retiring cipher, and gives each one a fix-by year.</p>
+    <div class="land-a"><button class="cta" id="cta">Check your code</button><button class="lnk" id="seerep">See a report on a real project</button></div></section>
+    ${explainer()}
+    <div class="wb" id="tool"><div class="wb-h"><div><h2 class="wb-t">Try it on your own code</h2><p class="fxn" style="margin-top:8px">Paste Python or pick a folder. The scan runs in your browser and nothing is uploaded.</p></div>
     <div class="wb-s"><span class="m" id="msg">${S.scanMsg?esc(S.scanMsg):''}</span><button class="lnk" id="gop">Scan a folder instead</button><input type="file" id="fld" webkitdirectory multiple hidden></div></div>
     <div class="wb-g"><div class="ed"><div class="gut" id="gut">${gutter(lines,S.scanRes)}</div><textarea id="src" spellcheck="false" wrap="off" aria-label="Python code to scan">${esc(S.scode)}</textarea></div>
     <div class="out" id="res">${scanOut(S.scanRes)}</div></div></div>`;
@@ -360,6 +366,7 @@ function bindScan(){
   t.oninput=()=>{ S.scode=t.value; g.innerHTML=gutter(t.value.split('\n').length,S.scanRes); scanSoon(); };
   t.onscroll=()=>{ g.scrollTop=t.scrollTop; };
   $('#gop').onclick=()=>$('#fld').click();
+  $('#cta').onclick=()=>$('#tool').scrollIntoView({behavior:REDUCE?'auto':'smooth'}); $('#seerep').onclick=()=>go('overview'); bindExplainer();
   $('#fld').onchange=e=>doScan({files:Array.from(e.target.files)});
   bindScanOut(); liveScan();
 }

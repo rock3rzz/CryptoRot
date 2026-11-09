@@ -1,5 +1,5 @@
 /* ---------- home page explainer: four scenes drawn from a clock ---------- */
-const EXD=9000, EXN=4;
+const EXD=9000;
 const bez=(x1,y1,x2,y2)=>x=>{ if(x<=0) return 0; if(x>=1) return 1; let a=0,b=1,t=x; for(let i=0;i<24;i++){ const cx=3*x1*t*(1-t)*(1-t)+3*x2*t*t*(1-t)+t*t*t; if(cx<x) a=t; else b=t; t=(a+b)/2; } return 3*y1*t*(1-t)*(1-t)+3*y2*t*t*(1-t)+t*t*t; };
 const eOut=bez(.16,1,.3,1), eIO=bez(.76,0,.24,1);
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)), sg=(t,a,b)=>cl((t-a)/(b-a)), lerp=(a,b,p)=>a+(b-a)*p;
@@ -93,22 +93,43 @@ function s4(t){
   if(t>6200){ const p=eOut(sg(t,6200,6900)); o+=`<g opacity="${p}">${T(24,362,'3 findings: 2 due today, 1 due in 2030','ex-l')}</g>`; }
   return o;
 }
-const EXS={t:0,playing:true,last:0,shown:-1}, SC=[s1,s2,s3,s4];
+function s5(t){
+  const cols=[['Today',XC.rust,[['MD5 hash'],['ECB mode'],['Hardcoded key']]],['By 2030',XC.och,[['RSA key generation'],['ECDSA signature']]],['2031 and later',XC.ink,[['RSA key exchange'],['Diffie-Hellman']]]];
+  let o=''; let n=0;
+  cols.forEach(([h,col,items],ci)=>{
+    const x=40+ci*270; const hp=eOut(sg(t,200+ci*200,900+ci*200));
+    o+=`<g opacity="${hp}">`+T(x,52,h,'ex-big',undefined,col).replace('class="ex-big"','class="ex-l" style="font-size:26px;font-weight:600;fill:'+col+'"')+R(x,66,240,3,col)+'</g>';
+    items.forEach(([lb],i)=>{
+      const st=1400+n*520; n++; const p=eOut(sg(t,st,st+700)), y=lerp(-40,92+i*64,p);
+      o+=`<g opacity="${cl(p*3)}">`+R(x,y,240,48,XC.bone,`stroke="${XC.ink}" stroke-width="2"`)+R(x,y,6,48,col)+T(x+22,y+30,lb,'ex-l')+'</g>';
+    });
+  });
+  const ep=eOut(sg(t,5600,6400));
+  o+=`<g opacity="${ep}">`+R(40,308,780,1,XC.line)+T(40,348,'Export the list as JSON, CycloneDX CBOM, SARIF or CSV','ex-l')+T(40,374,'Fix the first column now. Plan the rest.','ex-s')+'</g>';
+  return o;
+}
+const LCAP=[
+ ['Encrypted today, opened later','Attackers copy encrypted traffic now and keep it. RSA and Diffie-Hellman protect it only until a large quantum computer can break them, and standards bodies plan for that between 2030 and 2035. Anything that must stay secret for ten years is already exposed.'],
+ ['CryptoRot reads your code','It follows every name to its real value, even one built from pieces like "md" + "5", and lists each weak or retiring algorithm with the line it sits on.'],
+ ['You get a dated to-do list','Every finding lands under Today, a 2030 standards deadline, or the quantum clock for 2031 and later. Hand it to your team, your auditor or your tracker.']];
+const SETS={ideas:{sc:[s1,s2,s3,s4],cap:EXCAP,k:true},land:{sc:[s3,s4,s5],cap:LCAP,k:false}};
+let EXK='ideas'; const EXSET=()=>SETS[EXK], EXN=()=>SETS[EXK].sc.length;
+const EXS={t:0,playing:true,last:0,shown:-1};
 function explainer(){
   return `<section class="ex" aria-label="Four ideas behind every finding"><div class="ex-stage"><svg id="exs" viewBox="0 0 860 390" role="img" aria-label="Animated explanation"></svg></div>
    <div class="ex-side"><p class="kick" id="exk"></p><h3 id="exh"></h3><p id="exp"></p>
-   <div class="ex-ctl"><div class="ex-sq">${[0,1,2,3].map(i=>`<button data-ex="${i}" aria-label="Scene ${i+1}"></button>`).join('')}</div><button class="lnk" id="explay">Pause</button></div></div></section>`;
+   <div class="ex-ctl"><div class="ex-sq">${EXSET().sc.map((_,i)=>`<button data-ex="${i}" aria-label="Scene ${i+1}"></button>`).join('')}</div><button class="lnk" id="explay">Pause</button></div></div></section>`;
 }
 function exCaption(i){
-  const h=$('#exh'); if(!h) return; EXS.shown=i; $('#exk').textContent=`${i+1} of ${EXN}`; h.textContent=EXCAP[i][0]; $('#exp').textContent=EXCAP[i][1];
+  const h=$('#exh'); if(!h) return; EXS.shown=i; $('#exk').textContent=EXSET().k?`${i+1} of ${EXN()}`:''; $('#exk').style.display=EXSET().k?'':'none'; h.textContent=EXSET().cap[i][0]; $('#exp').textContent=EXSET().cap[i][1];
   document.querySelectorAll('[data-ex]').forEach(b=>b.classList.toggle('on',+b.dataset.ex===i));
 }
 function exDraw(){
-  const svg=$('#exs'); if(!svg) return; const i=Math.floor(EXS.t/EXD)%EXN, lt=EXS.t-i*EXD;
-  svg.innerHTML=SC[i](lt); if(EXS.shown!==i||!$('#exh').textContent) exCaption(i);
+  const svg=$('#exs'); if(!svg) return; const i=Math.floor(EXS.t/EXD)%EXN(), lt=EXS.t-i*EXD;
+  svg.innerHTML=EXSET().sc[i](lt); if(EXS.shown!==i||!$('#exh').textContent) exCaption(i);
 }
 const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function exTick(ts){ requestAnimationFrame(exTick); const svg=$('#exs'); if(!svg){ EXS.last=0; return; } if(!EXS.last) EXS.last=ts; const dt=Math.min(100,ts-EXS.last); EXS.last=ts; if(EXS.playing&&!REDUCE) EXS.t=(EXS.t+dt)%(EXD*EXN); exDraw(); }
+function exTick(ts){ requestAnimationFrame(exTick); const svg=$('#exs'); if(!svg){ EXS.last=0; return; } if(!EXS.last) EXS.last=ts; const dt=Math.min(100,ts-EXS.last); EXS.last=ts; if(EXS.playing&&!REDUCE) EXS.t=(EXS.t+dt)%(EXD*EXN()); exDraw(); }
 function bindExplainer(){
   document.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{ EXS.t=+b.dataset.ex*EXD+(REDUCE?EXD-1:0); exDraw(); });
   const p=$('#explay'); if(p){ p.textContent=EXS.playing?'Pause':'Play'; p.onclick=()=>{ EXS.playing=!EXS.playing; p.textContent=EXS.playing?'Pause':'Play'; }; }
